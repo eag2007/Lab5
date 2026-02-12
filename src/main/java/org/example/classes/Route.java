@@ -3,6 +3,7 @@ package org.example.classes;
 import org.example.classes.managers.ManagerGenerateId;
 
 import java.time.ZonedDateTime;
+import java.util.Comparator;
 
 import static org.example.classes.runner.Runner.managerInputOutput;
 
@@ -15,14 +16,62 @@ public class Route {
     private Location to; //Поле не может быть null
     private Integer distance; //Поле может быть null, Значение поля должно быть больше 1
 
+    public static Comparator<Route> COMPARATOR_COLLECTIONS = Comparator
+            .comparing(Route::getDistance)
+            .thenComparing(Route::getName)
+            .thenComparingLong(Route::getId);
+
     public Route() {
         this.id = ManagerGenerateId.generateId();
         this.creationDate = ZonedDateTime.now();
         setName();
+        setCoordinates();
+        setLocationFrom();
+        setLocationTo();
         setDistance();
     }
 
-    public void setName() {
+    public Route(long id) {
+        this.id = id;
+        this.creationDate = ZonedDateTime.now();
+        setName();
+        setCoordinates();
+        setLocationFrom();
+        setLocationTo();
+        setDistance();
+    }
+
+    public long getId() {
+        return this.id;
+    }
+
+    public ZonedDateTime getCreationDate() {
+        return this.creationDate;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public Coordinates getCoordinates() {
+        return this.coordinates;
+    }
+
+    public Location getFrom() {
+        return this.from;
+    }
+
+    public Location getTo() {
+        return this.to;
+    }
+
+    public Integer getDistance() {
+        return this.distance;
+    }
+
+
+
+    private void setName() {
         managerInputOutput.writeLineIO("Введите name : ");
         String name = managerInputOutput.readLineIO();
 
@@ -35,13 +84,19 @@ public class Route {
         this.name = name;
     }
 
-    public void setLocationFrom() {
+    private void setCoordinates() {
+        this.coordinates = new Coordinates();
     }
 
-    public void setLocationTo() {
+    private void setLocationFrom() {
+        this.from = new Location();
     }
 
-    public void setDistance() {
+    private void setLocationTo() {
+        this.to = new Location();
+    }
+
+    private void setDistance() {
         managerInputOutput.writeLineIO("Введите distance : ");
 
         int distance;

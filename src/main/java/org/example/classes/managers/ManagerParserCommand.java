@@ -41,7 +41,6 @@ public class ManagerParserCommand {
         if (this.commands.containsKey(s)) {
             Command cmd = this.commands.get(s);
             cmd.executeCommand();
-            new Route();
 
             if (this.historyCommands.size() >= MAX_SIZE_LEN_HISTORY) {
                 this.historyCommands.removeFirst();

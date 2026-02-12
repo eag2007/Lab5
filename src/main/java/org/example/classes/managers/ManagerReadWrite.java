@@ -1,4 +1,6 @@
 package org.example.classes.managers;
 
-public class ManagerReadWrite {
+import org.example.interfaces.ReadWrite;
+
+public class ManagerReadWrite implements ReadWrite {
 }
