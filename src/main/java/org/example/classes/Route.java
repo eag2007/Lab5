@@ -41,6 +41,17 @@ public class Route {
         setDistance();
     }
 
+    public Route(long id, String name, Coordinates coordinates, ZonedDateTime creationDate, Location from, Location to, Integer distance) {
+        this.id = id;
+        this.creationDate = ZonedDateTime.now();
+        this.name = name;
+        this.coordinates = coordinates;
+        this.creationDate = creationDate;
+        this.from = from;
+        this.to = to;
+        this.distance = distance;
+    }
+
     public long getId() {
         return this.id;
     }
@@ -68,7 +79,6 @@ public class Route {
     public Integer getDistance() {
         return this.distance;
     }
-
 
 
     private void setName() {

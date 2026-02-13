@@ -11,6 +11,12 @@ public class Location {
         setZ();
     }
 
+    public Location(float x, Double y, int z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+
     private void setX() {
     }
 

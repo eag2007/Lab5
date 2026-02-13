@@ -43,7 +43,7 @@ public class ManagerParserCommand {
             cmd.executeCommand();
 
             if (this.historyCommands.size() >= MAX_SIZE_LEN_HISTORY) {
-                this.historyCommands.removeFirst();
+                this.historyCommands.remove(0);
             }
             this.historyCommands.add(s);
             return true;
