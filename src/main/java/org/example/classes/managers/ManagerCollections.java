@@ -57,6 +57,7 @@ public class ManagerCollections {
     }
 
     public void addAllCollection(List<String[]> collectionImportCSV) {
+        long maxId = 0;
         for (String[] row : collectionImportCSV) {
             try {
                 if (row[0].equals("id")) continue;
@@ -69,23 +70,31 @@ public class ManagerCollections {
                         Long.parseLong(row[3])
                 );
 
+                ZonedDateTime creationDate = ZonedDateTime.parse(row[4]);
+
                 Location from = new Location(
-                        Float.parseFloat(row[4].replace(',', '.')),
-                        Double.parseDouble(row[5].replace(',', '.')),
-                        Integer.parseInt(row[6])
+                        Float.parseFloat(row[5].replace(',', '.')),
+                        Double.parseDouble(row[6].replace(',', '.')),
+                        Integer.parseInt(row[7])
                 );
+
 
                 Location to = new Location(
-                        Float.parseFloat(row[7].replace(',', '.')),
-                        Double.parseDouble(row[8].replace(',', '.')),
-                        Integer.parseInt(row[9])
+                        Float.parseFloat(row[8].replace(',', '.')),
+                        Double.parseDouble(row[9].replace(',', '.')),
+                        Integer.parseInt(row[10])
                 );
 
-                Integer distance = Integer.parseInt(row[10]);
-                ZonedDateTime creationDate = ZonedDateTime.parse(row[11]);
+                Integer distance = Integer.parseInt(row[11]);
 
                 Route route = new Route(id, name, coordinates, creationDate, from, to, distance);
                 collectionsRoute.add(route);
+
+                if (id > maxId) {
+                    maxId = id;
+                }
+
+                ManagerGenerateId.setId(maxId);
 
             } catch (Exception e) {
                 managerInputOutput.writeLineIO("Ошибка: " + e.getMessage() + "\n");

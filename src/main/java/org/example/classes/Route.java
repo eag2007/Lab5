@@ -99,11 +99,11 @@ public class Route {
     }
 
     private void setLocationFrom() {
-        this.from = new Location();
+        this.from = new Location("From");
     }
 
     private void setLocationTo() {
-        this.to = new Location();
+        this.to = new Location("To");
     }
 
     private void setDistance() {

@@ -6,4 +6,8 @@ public class ManagerGenerateId {
     public static synchronized long generateId() {
         return ++id;
     }
+
+    public static synchronized void setId(long idGet) {
+        id = idGet++;
+    }
 }

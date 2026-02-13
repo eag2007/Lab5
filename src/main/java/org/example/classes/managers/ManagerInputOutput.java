@@ -31,9 +31,22 @@ public class ManagerInputOutput implements InputOutput {
         return in.hasNextInt();
     }
 
+    public boolean hasNextFloatIO() {return in.hasNextFloat();}
+
+    public boolean hasNextDoubleIO() {return in.hasNextDouble();}
+
     public int nextIntIO() {
         return in.nextInt();
     }
+
+    public float nextFloatIO() {
+        return in.nextFloat();
+    }
+
+    public Double nextDoubleIO() {
+        return in.nextDouble();
+    }
+
 
     public void closeIO() {
         this.in.close();

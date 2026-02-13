@@ -11,7 +11,7 @@ import static org.example.classes.runner.Runner.managerInputOutput;
 public class Show implements Command {
     public void executeCommand() {
         if (managerCollections.getCollectionsRoute().isEmpty()) {
-            managerInputOutput.writeLineIO("Коллекция пуста");
+            managerInputOutput.writeLineIO("Коллекция пуста\n");
         }
         for (Route route : managerCollections.getCollectionsRoute()) {
             String line = String.format("%-3s | %-20s | %-3s | %-3s | %-6s | %-6s | %-4s | %-6s | %-6s | %-4s | %-5s | %-25s",

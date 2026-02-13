@@ -11,6 +11,6 @@ public class RemoveFirst implements Command {
 
     @Override
     public String toString() {
-        return "remove_first  - удаляет элемент из коллекции";
+        return "remove_first  - удаляет первый элемент из коллекции";
     }
 }

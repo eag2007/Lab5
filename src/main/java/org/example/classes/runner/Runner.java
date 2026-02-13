@@ -22,29 +22,18 @@ public class Runner {
         managerCollections = new ManagerCollections();
 
         this.javaEnv = System.getenv("JAVAENV");
-//        System.out.println("JAVAENV" + javaEnv);
-//
-//        // /home/evgeniy/IdeaProjects/Lab5-Graddle/src/main/java/org/example/csv/collections.csv
-//
+
         managerInputOutput.writeLineIO("=====================================\n");
 
-        // List<String[]> data = managerReadWrite.readCSV("/home/evgeniy/" +
-        //        "IdeaProjects/Lab5-Graddle/src/main/java/org/example/csv/collections.csv");
+         List<String[]> data = managerReadWrite.readCSV("/home/evgeniy/" +
+                "IdeaProjects/Lab5-Graddle/src/main/java/org/example/csv/collections.csv");
 
-        List<String[]> data = managerReadWrite.readCSV(this.javaEnv);
+        // List<String[]> data = managerReadWrite.readCSV(this.javaEnv);
 
         managerInputOutput.writeLineIO("=====================================\n");
 
         managerCollections.addAllCollection(data);
 
-//        for (String[] row : data) {
-//            String line = String.format("%-3s | %-20s | %-3s | %-3s | %-6s | %-6s | %-4s | %-6s | %-6s | %-4s | %-5s | %-25s",
-//                    row[0], row[1], row[2], row[3], row[4], row[5], row[6],
-//                    row[7], row[8], row[9], row[10], row[11]);
-//
-//            managerInputOutput.writeLineIO(line + "\n");
-//        }
-//
     }
 
     public void run() {
