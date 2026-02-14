@@ -7,9 +7,20 @@ import static org.example.classes.runner.Runner.managerInputOutput;
 
 
 public class Exit implements Command {
-    public void executeCommand() {
-        managerInputOutput.closeIO();
-        System.exit(0);
+    public void executeCommand(String[] args) {
+        if (checkArg(args)) {
+            managerInputOutput.closeIO();
+            System.exit(0);
+        } else {
+            managerInputOutput.writeLineIO("Неверное количество аргументов\n");
+        }
+    }
+
+    public boolean checkArg(String[] args) {
+        if (args.length == 0) {
+            return true;
+        }
+        return false;
     }
 
     @Override

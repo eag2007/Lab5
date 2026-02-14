@@ -4,6 +4,7 @@ import org.example.classes.managers.ManagerGenerateId;
 
 import java.time.ZonedDateTime;
 import java.util.Comparator;
+//import java.util.Comparable;
 
 import static org.example.classes.runner.Runner.managerInputOutput;
 
@@ -16,10 +17,64 @@ public class Route {
     private Location to; //Поле не может быть null
     private Integer distance; //Поле может быть null, Значение поля должно быть больше 1
 
+    /*
+    @Override
+    public int compareTo(Route o) {
+        int idCompare = Long.compare(this.id, o.id);
+        if (idCompare != 0) {
+            return idCompare;
+        }
+
+        int nameCompare = this.name.compareTo(o.name);
+        if (nameCompare != 0) {
+            return nameCompare;
+        }
+
+        int coordCompare = this.coordinates.compareTo(o.coordinates);
+        if (coordCompare != 0) {
+            return coordCompare;
+        }
+
+        int dateCompare = this.creationDate.compareTo(o.creationDate);
+        if (dateCompare != 0) {
+            return dateCompare;
+        }
+
+        if (this.from == null) {
+            return -1;
+        }
+
+        if (o.from == null) {
+            return 1;
+        }
+
+        int locFromCompare = this.from.compareTo(o.from);
+        if (locFromCompare != 0) {
+            return locFromCompare;
+        }
+
+        int locToCompare = this.to.compareTo(o.to);
+        if (locToCompare != 0) {
+            return locToCompare;
+        }
+
+        if (this.distance == null) {
+            return -1;
+        }
+
+        if (o.distance == null) {
+            return 1;
+        }
+
+        return Integer.compare(this.distance, o.distance);
+    }*/
     public static Comparator<Route> COMPARATOR_COLLECTIONS = Comparator
-            .comparing(Route::getDistance)
+            .comparingLong(Route::getId)
+            .thenComparing(Route::getDistance)
             .thenComparing(Route::getName)
-            .thenComparingLong(Route::getId);
+            .thenComparing(Route::getFrom, Comparator.nullsLast(Comparator.comparing(Location::getX).thenComparing(Location::getY).thenComparing(Location::getZ)))
+            .thenComparing(Route::getTo, Comparator.comparing(Location::getX).thenComparing(Location::getY).thenComparing(Location::getZ))
+            .thenComparing(Route::getCreationDate);
 
     public Route() {
         this.id = ManagerGenerateId.generateId();

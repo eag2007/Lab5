@@ -7,13 +7,24 @@ import static org.example.classes.runner.Runner.managerInputOutput;
 import static org.example.classes.runner.Runner.managerParserCommand;
 
 public class Help implements Command{
-    public void executeCommand() {
-        managerInputOutput.writeLineIO("Справка по командам:\n");
-        managerInputOutput.writeLineIO("------------------------------------------------------\n");
-        for (Command cmd : managerParserCommand.getCommands()) {
-            managerInputOutput.writeLineIO(cmd + "\n");
+    public void executeCommand(String[] args) {
+        if (checkArg(args)) {
+            managerInputOutput.writeLineIO("Справка по командам:\n");
+            managerInputOutput.writeLineIO("------------------------------------------------------\n");
+            for (Command cmd : managerParserCommand.getCommands()) {
+                managerInputOutput.writeLineIO(cmd + "\n");
+            }
+            managerInputOutput.writeLineIO("------------------------------------------------------\n");
+        } else {
+            managerInputOutput.writeLineIO("Неверное количество аргументов\n");
         }
-        managerInputOutput.writeLineIO("------------------------------------------------------\n");
+    }
+
+    public boolean checkArg(String[] args) {
+        if (args.length == 0) {
+            return true;
+        }
+        return false;
     }
 
     @Override

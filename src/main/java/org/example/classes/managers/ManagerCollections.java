@@ -32,20 +32,25 @@ public class ManagerCollections {
         this.collectionsRoute.clear();
     }
 
-    public void removeAllByDistanceCollections() {
+    public void removeAllByDistanceCollections(PriorityQueue<Route> routes) {
+        this.collectionsRoute = routes;
     }
 
-    public void removeByIdCollections() {
+    public void removeByIdCollections(Long id) {
+        this.collectionsRoute.removeIf(route -> ((Long) route.getId()).equals(id));
     }
 
     public void removeFirstCollections() {
+        this.collectionsRoute.remove();
     }
 
     public PriorityQueue<Route> getCollectionsRoute() {
         return this.collectionsRoute;
     }
 
-    public void updateCollections() {
+    public void updateCollections(Long id) {
+        removeByIdCollections(id);
+        this.collectionsRoute.add(new Route(id));
     }
 
     public int getSizeCollections() {

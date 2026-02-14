@@ -9,18 +9,29 @@ import static org.example.classes.runner.Runner.managerCollections;
 import static org.example.classes.runner.Runner.managerInputOutput;
 
 public class AverageOfDistance implements Command {
-    public void executeCommand() {
-        PriorityQueue<Route> collectionsRoute = managerCollections.getCollectionsRoute();
-        Double distance = 0d;
+    public void executeCommand(String[] args) {
+        if (checkArg(args)) {
+            PriorityQueue<Route> collectionsRoute = managerCollections.getCollectionsRoute();
+            Double distance = 0d;
 
-        for (Route element : collectionsRoute) {
-            distance += element.getDistance();
+            for (Route element : collectionsRoute) {
+                distance += element.getDistance();
+            }
+            int sizeCollections = managerCollections.getSizeCollections();
+            if (sizeCollections != 0) {
+                distance = distance / managerCollections.getSizeCollections();
+            }
+            managerInputOutput.writeLineIO("Среднее значение distance всех элементов : " + distance + "\n");
+        } else {
+            managerInputOutput.writeLineIO("Неправильное количество аргументов\n");
         }
-        int sizeCollections = managerCollections.getSizeCollections();
-        if (sizeCollections != 0) {
-            distance = distance / managerCollections.getSizeCollections();
+    }
+
+    public boolean checkArg(String[] args) {
+        if (args.length == 0) {
+            return true;
         }
-        managerInputOutput.writeLineIO("Среднее значение distance всех элементов : " + distance + "\n");
+        return false;
     }
 
     @Override

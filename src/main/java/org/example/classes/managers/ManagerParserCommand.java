@@ -1,10 +1,10 @@
 package org.example.classes.managers;
 
-import org.example.classes.Route;
 import org.example.classes.commands.*;
 import org.example.interfaces.Command;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -36,11 +36,12 @@ public class ManagerParserCommand {
     }
 
     public boolean parserCommand(String s) {
-        String[] command = s.split(" ");
+        String[] command = s.trim().replaceAll("\\s+", " ").split(" ");
 
-        if (this.commands.containsKey(s)) {
-            Command cmd = this.commands.get(s);
-            cmd.executeCommand();
+        if (this.commands.containsKey(command[0])) {
+            System.out.println(command[0]);
+            Command cmd = this.commands.get(command[0]);
+            cmd.executeCommand(Arrays.copyOfRange(command, 1, command.length));
 
             if (this.historyCommands.size() >= MAX_SIZE_LEN_HISTORY) {
                 this.historyCommands.remove(0);
