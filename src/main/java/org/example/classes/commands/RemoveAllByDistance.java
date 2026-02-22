@@ -13,12 +13,13 @@ public class RemoveAllByDistance implements Command {
         if (checkArg(args)) {
             Integer distance = Integer.parseInt(args[0]);
             PriorityQueue<Route> routes = managerCollections.getCollectionsRoute();
-            PriorityQueue<Route> routesNew = new PriorityQueue<>();
+            PriorityQueue<Route> routesNew = new PriorityQueue<>(Route.COMPARATOR_COLLECTIONS);
             for (Route route : routes) {
                 if (!route.getDistance().equals(distance)) {
                     routesNew.add(route);
                 }
             }
+
             managerCollections.removeAllByDistanceCollections(routesNew);
             managerInputOutput.writeLineIO("Данные удалены\n");
         } else {
