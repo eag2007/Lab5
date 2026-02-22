@@ -12,7 +12,7 @@ public class Show implements Command {
             if (managerCollections.getCollectionsRoute().isEmpty()) {
                 managerInputOutput.writeLineIO("Коллекция пуста\n");
             }
-            for (Route route : managerCollections.getCollectionsRoute()) {
+            for (Route route : managerCollections.getSortedCollections()) {
                 String line = String.format("%-3s | %-20s | %-3s | %-3s | %-6s | %-6s | %-4s | %-6s | %-6s | %-4s | %-5s | %-25s",
                         route.getId(), route.getName(), route.getCoordinates().getX(), route.getCoordinates().getY(),
                         route.getCreationDate(), route.getFrom().getX(), route.getFrom().getY(), route.getFrom().getZ(),

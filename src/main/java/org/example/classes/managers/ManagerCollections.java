@@ -6,11 +6,13 @@ import org.example.classes.Route;
 import org.example.interfaces.Command;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.PriorityQueue;
 
 import static org.example.classes.runner.Runner.managerInputOutput;
+import static org.example.classes.runner.Runner.managerValidationData;
 
 public class ManagerCollections {
     private PriorityQueue<Route> collectionsRoute;
@@ -41,7 +43,13 @@ public class ManagerCollections {
     }
 
     public void removeFirstCollections() {
-        this.collectionsRoute.remove();
+        this.collectionsRoute.poll();
+    }
+
+    public List<Route> getSortedCollections() {
+        List<Route> sorted = new ArrayList<>(collectionsRoute);
+        sorted.sort(Route.COMPARATOR_COLLECTIONS);
+        return sorted;
     }
 
     public PriorityQueue<Route> getCollectionsRoute() {
@@ -50,7 +58,7 @@ public class ManagerCollections {
 
     public void updateCollections(Long id) {
         removeByIdCollections(id);
-        this.collectionsRoute.add(new Route(id));
+        this.collectionsRoute.add(managerValidationData.validateFromInput(id));
     }
 
     public int getSizeCollections() {

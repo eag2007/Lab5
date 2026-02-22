@@ -22,91 +22,10 @@ public class Location implements Comparable<Location>{
         return Integer.compare(this.z, o.z);
     }
 
-    public Location(String s) {
-        managerInputOutput.writeLineIO("Ввод Location" + s + "\n");
-        setX();
-        setY();
-        setZ();
-    }
-
     public Location(float x, Double y, int z) {
         this.x = x;
         this.y = y;
         this.z = z;
-    }
-
-    private void setX() {
-        managerInputOutput.writeLineIO("Введите X для Location : ");
-
-        float x;
-        while (true) {
-            String input = managerInputOutput.readLineIO().trim();
-
-            if (input.isEmpty()) {
-                managerInputOutput.writeLineIO("X не может быть пустым\n");
-                managerInputOutput.writeLineIO("Введите X для Location : ");
-                continue;
-            }
-
-            try {
-                x = Float.parseFloat(input);
-                this.x = x;
-                break;
-            } catch (NumberFormatException e) {
-                try {
-                    x = Integer.parseInt(input);
-                    this.x = x;
-                    break;
-                } catch (NumberFormatException e2) {
-                    managerInputOutput.writeLineIO("X должно быть числом (int или float)\n");
-                    managerInputOutput.writeLineIO("Введите X для Location : ");
-                }
-            }
-        }
-    }
-
-    private void setY() {
-        managerInputOutput.writeLineIO("Введите Y для Location : ");
-
-        while (true) {
-            String input = managerInputOutput.readLineIO().trim();
-
-            if (input.isEmpty()) {
-                managerInputOutput.writeLineIO("Y не может быть пустым\n");
-                managerInputOutput.writeLineIO("Введите Y для Location : ");
-                continue;
-            }
-
-            try {
-                this.y = Double.parseDouble(input);
-                break;
-            } catch (NumberFormatException e) {
-                managerInputOutput.writeLineIO("Y должно быть числом (int, float или double)\n");
-                managerInputOutput.writeLineIO("Введите Y для Location : ");
-            }
-        }
-    }
-
-    private void setZ() {
-        managerInputOutput.writeLineIO("Введите Z для Location : ");
-
-        while (true) {
-            String input = managerInputOutput.readLineIO().trim();
-
-            if (input.isEmpty()) {
-                managerInputOutput.writeLineIO("Z не может быть пустым\n");
-                managerInputOutput.writeLineIO("Введите Z для Location : ");
-                continue;
-            }
-
-            try {
-                this.z = Integer.parseInt(input);
-                break;
-            } catch (NumberFormatException e) {
-                managerInputOutput.writeLineIO("Z должно быть целым числом (int)\n");
-                managerInputOutput.writeLineIO("Введите Z для Location : ");
-            }
-        }
     }
 
     public float getX() {

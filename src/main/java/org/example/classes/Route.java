@@ -76,24 +76,24 @@ public class Route {
             .thenComparing(Route::getTo, Comparator.comparing(Location::getX).thenComparing(Location::getY).thenComparing(Location::getZ))
             .thenComparing(Route::getCreationDate);
 
-    public Route() {
+    public Route(String name, Coordinates coordinates, Location from, Location to, Integer distance) {
         this.id = ManagerGenerateId.generateId();
         this.creationDate = ZonedDateTime.now();
-        setName();
-        setCoordinates();
-        setLocationFrom();
-        setLocationTo();
-        setDistance();
+        this.name = name;
+        this.coordinates = coordinates;
+        this.from = from;
+        this.to = to;
+        this.distance = distance;
     }
 
-    public Route(long id) {
+    public Route(long id, String name, Coordinates coordinates, Location from, Location to, Integer distance) {
         this.id = id;
         this.creationDate = ZonedDateTime.now();
-        setName();
-        setCoordinates();
-        setLocationFrom();
-        setLocationTo();
-        setDistance();
+        this.name = name;
+        this.coordinates = coordinates;
+        this.from = from;
+        this.to = to;
+        this.distance = distance;
     }
 
     public Route(long id, String name, Coordinates coordinates, ZonedDateTime creationDate, Location from, Location to, Integer distance) {
@@ -133,54 +133,5 @@ public class Route {
 
     public Integer getDistance() {
         return this.distance;
-    }
-
-
-    private void setName() {
-        managerInputOutput.writeLineIO("Введите name : ");
-        String name = managerInputOutput.readLineIO();
-
-        while (name.isEmpty()) {
-            managerInputOutput.writeLineIO("NAME не может быть null\n");
-            managerInputOutput.writeLineIO("Введите name : ");
-            name = managerInputOutput.readLineIO();
-        }
-
-        this.name = name;
-    }
-
-    private void setCoordinates() {
-        this.coordinates = new Coordinates();
-    }
-
-    private void setLocationFrom() {
-        this.from = new Location("From");
-    }
-
-    private void setLocationTo() {
-        this.to = new Location("To");
-    }
-
-    private void setDistance() {
-        managerInputOutput.writeLineIO("Введите distance : ");
-
-        int distance;
-        while (true) {
-            if (managerInputOutput.hasNextIntIO()) {
-                distance = managerInputOutput.nextIntIO();
-                managerInputOutput.readLineIO();
-                if (distance > 1) {
-                    this.distance = distance;
-                    break;
-                } else {
-                    managerInputOutput.writeLineIO("DISTANCE должно быть больше\n");
-                }
-            } else {
-                managerInputOutput.readLineIO();
-                managerInputOutput.writeLineIO("DISTANCE должно быть типа Integer\n");
-            }
-
-            managerInputOutput.writeLineIO("Введите distance : ");
-        }
     }
 }

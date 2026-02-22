@@ -2,11 +2,15 @@ package org.example.classes.managers;
 
 import org.example.interfaces.InputOutput;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class ManagerInputOutput implements InputOutput {
     private static ManagerInputOutput managerInputOutput;
-    private final Scanner in;
+    private Scanner in;
+    private BufferedReader inRead;
+    private boolean executeScript = false;
 
     private ManagerInputOutput() {
         this.in = new Scanner(System.in);
@@ -19,7 +23,34 @@ public class ManagerInputOutput implements InputOutput {
         return managerInputOutput;
     }
 
+    public void setFileExecute(BufferedReader reader) {
+        this.inRead = reader;
+        this.executeScript = true;
+    }
+
+    public void setConsoleExecute() {
+        this.executeScript = false;
+        this.inRead = null;
+    }
+
+    public boolean isScriptMode() {
+        return this.executeScript;
+    }
+
     public String readLineIO() {
+        if (this.executeScript && this.inRead != null) {
+            try {
+                String line = this.inRead.readLine();
+                if (line != null) {
+                    System.out.println("[Значение из скрипта] " + line);
+                    return line;
+                } else {
+                    setConsoleExecute();
+                }
+            } catch (IOException e) {
+                setConsoleExecute();
+            }
+        }
         return this.in.nextLine();
     }
 
@@ -28,28 +59,36 @@ public class ManagerInputOutput implements InputOutput {
     }
 
     public boolean hasNextIntIO() {
-        return in.hasNextInt();
+        if (this.executeScript) return true;
+        return this.in.hasNextInt();
     }
-
-    public boolean hasNextFloatIO() {return in.hasNextFloat();}
-
-    public boolean hasNextDoubleIO() {return in.hasNextDouble();}
 
     public int nextIntIO() {
-        return in.nextInt();
+        if (this.executeScript) {
+            try {
+                String line = this.inRead.readLine();
+                if (line != null) {
+                    System.out.println("[Значение из скрипта] " + line);
+                    return Integer.parseInt(line.trim());
+                } else {
+                    setConsoleExecute();
+                }
+            } catch (Exception e) {
+                setConsoleExecute();
+            }
+        }
+        return this.in.nextInt();
     }
-
-    public float nextFloatIO() {
-        return in.nextFloat();
-    }
-
-    public Double nextDoubleIO() {
-        return in.nextDouble();
-    }
-
 
     public void closeIO() {
         this.in.close();
-        managerInputOutput.writeLineIO("IO закрыт\n");
+        try {
+            if (this.inRead != null) {
+                this.inRead.close();
+            }
+        } catch (IOException e) {
+            System.out.println("Ошибка: " + e);
+        }
+        writeLineIO("IO закрыт\n");
     }
 }

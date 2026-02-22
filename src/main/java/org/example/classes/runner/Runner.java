@@ -1,9 +1,6 @@
 package org.example.classes.runner;
 
-import org.example.classes.managers.ManagerCollections;
-import org.example.classes.managers.ManagerInputOutput;
-import org.example.classes.managers.ManagerParserCommand;
-import org.example.classes.managers.ManagerReadWrite;
+import org.example.classes.managers.*;
 
 import java.util.List;
 
@@ -12,23 +9,22 @@ public class Runner {
     public static ManagerInputOutput managerInputOutput;
     public static ManagerCollections managerCollections;
     public static ManagerReadWrite managerReadWrite;
+    public static ManagerValidationData managerValidationData;
 
-    private String javaEnv;
+    private String javaMetaspace;
 
     public Runner() {
         managerParserCommand = new ManagerParserCommand();
         managerInputOutput = ManagerInputOutput.getInstance();
         managerReadWrite = ManagerReadWrite.getInstance();
         managerCollections = new ManagerCollections();
+        managerValidationData = new ManagerValidationData();
 
-        this.javaEnv = System.getenv("JAVAENV");
+        this.javaMetaspace = System.getenv("JAVAMETASPACE");
 
         managerInputOutput.writeLineIO("=====================================\n");
 
-         List<String[]> data = managerReadWrite.readCSV("/home/evgeniy/" +
-                "IdeaProjects/Lab5-Graddle/src/main/java/org/example/csv/collections.csv");
-
-        // List<String[]> data = managerReadWrite.readCSV(this.javaEnv);
+        List<String[]> data = managerReadWrite.readCSV(this.javaMetaspace);
 
         managerInputOutput.writeLineIO("=====================================\n");
 
