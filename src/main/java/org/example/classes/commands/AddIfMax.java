@@ -1,6 +1,6 @@
 package org.example.classes.commands;
 
-import org.example.Colors;
+import org.example.enums.Colors;
 import org.example.classes.Route;
 import org.example.interfaces.Command;
 
@@ -27,7 +27,6 @@ public class AddIfMax implements Command {
                     managerInputOutput.writeLineIO("Элемент не добавлен (не превышает максимальный)\n");
                 }
             } else {
-                // Если коллекция пуста, добавляем элемент
                 managerCollections.addCollections(newRoute);
                 managerInputOutput.writeLineIO("Коллекция была пуста, элемент добавлен\n");
             }

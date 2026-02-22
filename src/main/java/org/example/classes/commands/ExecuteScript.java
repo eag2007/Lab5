@@ -1,6 +1,6 @@
 package org.example.classes.commands;
 
-import org.example.Colors;
+import org.example.enums.Colors;
 import org.example.interfaces.Command;
 import java.io.File;
 import java.io.BufferedReader;

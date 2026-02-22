@@ -1,6 +1,6 @@
 package org.example.classes.commands;
 
-import org.example.Colors;
+import org.example.enums.Colors;
 import org.example.interfaces.Command;
 
 import static org.example.classes.runner.Runner.managerCollections;
@@ -18,6 +18,13 @@ public class Update implements Command {
 
     public boolean checkArg(String[] args) {
         if (args.length == 2 && args[1].equals("Route")) {
+            try {
+                Long.parseLong(args[0]);
+                return true;
+            } catch (NumberFormatException e) {
+                return false;
+            }
+        } else if (args.length == 1) {
             try {
                 Long.parseLong(args[0]);
                 return true;

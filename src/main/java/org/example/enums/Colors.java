@@ -1,4 +1,4 @@
-package org.example;
+package org.example.enums;
 
 public enum Colors {
     RED("\u001B[31m"),

@@ -1,6 +1,5 @@
 package org.example.classes.commands;
 
-import org.example.Colors;
 import org.example.interfaces.Command;
 
 import static org.example.classes.runner.Runner.*;
@@ -15,9 +14,6 @@ public class Save implements Command {
     }
 
     public boolean checkArg(String[] args) {
-        if (args.length == 1) {
-            return false;
-        }
         return true;
     }
 

@@ -1,6 +1,6 @@
 package org.example.classes.managers;
 
-import org.example.Colors;
+import org.example.enums.Colors;
 import org.example.interfaces.InputOutput;
 
 import java.io.BufferedReader;

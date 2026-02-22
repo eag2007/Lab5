@@ -1,8 +1,7 @@
 package org.example.classes.commands;
 
-import org.example.Colors;
+import org.example.enums.Colors;
 import org.example.classes.Route;
-import org.example.classes.managers.ManagerValidationData;
 import org.example.interfaces.Command;
 
 import static org.example.classes.runner.Runner.*;
