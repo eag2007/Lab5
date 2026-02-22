@@ -39,7 +39,6 @@ public class ManagerParserCommand {
         String[] command = s.trim().replaceAll("\\s+", " ").split(" ");
 
         if (this.commands.containsKey(command[0])) {
-            System.out.println(command[0]);
             Command cmd = this.commands.get(command[0]);
             cmd.executeCommand(Arrays.copyOfRange(command, 1, command.length));
 

@@ -1,5 +1,6 @@
 package org.example.classes.commands;
 
+import org.example.Colors;
 import org.example.interfaces.Command;
 
 import static org.example.classes.runner.Runner.managerCollections;
@@ -9,6 +10,7 @@ public class Update implements Command {
     public void executeCommand(String[] args) {
         if (checkArg(args)) {
             managerCollections.updateCollections(Long.parseLong(args[0]));
+            managerInputOutput.writeLineIO("Элемент обновлён", Colors.GREEN);
         } else {
             managerInputOutput.writeLineIO("Неправильный порядок аргументов или их тип\n");
         }

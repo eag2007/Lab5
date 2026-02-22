@@ -11,7 +11,7 @@ public class Runner {
     public static ManagerReadWrite managerReadWrite;
     public static ManagerValidationData managerValidationData;
 
-    private String javaMetaspace;
+    public static String javaMetaspace = System.getenv("JAVAMETASPACE");
 
     public Runner() {
         managerParserCommand = new ManagerParserCommand();
@@ -19,8 +19,6 @@ public class Runner {
         managerReadWrite = ManagerReadWrite.getInstance();
         managerCollections = new ManagerCollections();
         managerValidationData = new ManagerValidationData();
-
-        this.javaMetaspace = System.getenv("JAVAMETASPACE");
 
         managerInputOutput.writeLineIO("=====================================\n");
 

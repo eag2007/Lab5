@@ -1,15 +1,14 @@
 package org.example.classes.commands;
 
+import org.example.Colors;
 import org.example.interfaces.Command;
 
-import static org.example.classes.runner.Runner.managerInputOutput;
-import static org.example.classes.runner.Runner.managerReadWrite;
+import static org.example.classes.runner.Runner.*;
 
 public class Save implements Command {
     public void executeCommand(String[] args) {
         if (checkArg(args)) {
-            managerReadWrite.writeCSV("/home/evgeniy/" +
-                    "IdeaProjects/Lab5-Graddle/src/main/java/org/example/csv/collections.csv");
+            managerReadWrite.writeCSV(javaMetaspace);
         } else {
             managerInputOutput.writeLineIO("Неправильное количество аргументов или неправильный тип\n");
         }

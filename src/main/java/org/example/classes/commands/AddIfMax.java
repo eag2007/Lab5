@@ -1,5 +1,6 @@
 package org.example.classes.commands;
 
+import org.example.Colors;
 import org.example.classes.Route;
 import org.example.interfaces.Command;
 
@@ -21,7 +22,7 @@ public class AddIfMax implements Command {
 
                 if (maxRoute != null && Route.COMPARATOR_COLLECTIONS.compare(newRoute, maxRoute) > 0) {
                     managerCollections.addCollections(newRoute);
-                    managerInputOutput.writeLineIO("Элемент добавлен в коллекцию (превышает максимальный)\n");
+                    managerInputOutput.writeLineIO("Элемент добавлен в коллекцию (превышает максимальный)\n", Colors.GREEN);
                 } else {
                     managerInputOutput.writeLineIO("Элемент не добавлен (не превышает максимальный)\n");
                 }

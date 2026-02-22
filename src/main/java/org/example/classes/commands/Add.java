@@ -1,5 +1,6 @@
 package org.example.classes.commands;
 
+import org.example.Colors;
 import org.example.classes.Route;
 import org.example.classes.managers.ManagerValidationData;
 import org.example.interfaces.Command;
@@ -11,10 +12,12 @@ public class Add implements Command {
         if (checkArg(args)) {
             if (!managerInputOutput.isScriptMode()) {
                 managerCollections.addCollections(managerValidationData.validateFromInput());
+                managerInputOutput.writeLineIO("Элемент создан", Colors.GREEN);
             } else {
                 Route element = managerValidationData.validateFromFile();
                 if (element != null) {
                     managerCollections.addCollections(element);
+                    managerInputOutput.writeLineIO("Элемент создан", Colors.GREEN);
                 } else {
                     managerInputOutput.writeLineIO("Ошибка: невозможно создать элемент\n");
                     managerInputOutput.writeLineIO("[Элемент не создан]\n");

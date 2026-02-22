@@ -1,5 +1,6 @@
 package org.example.classes.managers;
 
+import org.example.Colors;
 import org.example.classes.Route;
 import org.example.interfaces.ReadWrite;
 
@@ -38,7 +39,7 @@ public class ManagerReadWrite implements ReadWrite {
                 }
                 line = readCSVFile.readLine();
             }
-            managerInputOutput.writeLineIO("Загружено строк: " + (data.size() - 1) + "\n");
+            managerInputOutput.writeLineIO("Загружено строк: " + (data.size() - 1) + "\n", Colors.GREEN);
         } catch (IOException e) {
             managerInputOutput.writeLineIO("Ошибка чтение файла коллекция пуста: " + e.getMessage() + "\n");
         }
@@ -81,7 +82,7 @@ public class ManagerReadWrite implements ReadWrite {
             }
 
             writer.flush();
-            managerInputOutput.writeLineIO("Успешно записано " + routes.size() + " маршрутов\n");
+            managerInputOutput.writeLineIO("Успешно записано " + routes.size() + " маршрутов\n", Colors.GREEN);
             return true;
 
         } catch (IOException e) {

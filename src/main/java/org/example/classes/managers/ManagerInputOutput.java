@@ -1,5 +1,6 @@
 package org.example.classes.managers;
 
+import org.example.Colors;
 import org.example.interfaces.InputOutput;
 
 import java.io.BufferedReader;
@@ -56,6 +57,10 @@ public class ManagerInputOutput implements InputOutput {
 
     public void writeLineIO(String message) {
         System.out.print(message);
+    }
+
+    public void writeLineIO(String message, Colors color) {
+        System.out.print(color + message + "\u001B[0m");
     }
 
     public boolean hasNextIntIO() {

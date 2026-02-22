@@ -1,5 +1,6 @@
 package org.example.classes.commands;
 
+import org.example.Colors;
 import org.example.interfaces.Command;
 import java.io.File;
 import java.io.BufferedReader;
@@ -59,7 +60,7 @@ public class ExecuteScript implements Command {
                 managerParserCommand.parserCommand(line);
             }
 
-            managerInputOutput.writeLineIO("Скрипт выполнен\n");
+            managerInputOutput.writeLineIO("Скрипт выполнен\n", Colors.GREEN);
 
         } catch (IOException e) {
             managerInputOutput.writeLineIO("Ошибка: " + e.getMessage() + "\n");
