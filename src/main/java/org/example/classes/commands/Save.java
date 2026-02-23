@@ -7,14 +7,21 @@ import static org.example.classes.runner.Runner.*;
 public class Save implements Command {
     public void executeCommand(String[] args) {
         if (checkArg(args)) {
-            managerReadWrite.writeCSV(javaMetaspace);
+            if (args.length == 1) {
+                managerReadWrite.writeCSV(args[0]);
+            } else {
+                managerReadWrite.writeCSV(javaMetaspace);
+            }
         } else {
             managerInputOutput.writeLineIO("Неправильное количество аргументов или неправильный тип\n");
         }
     }
 
     public boolean checkArg(String[] args) {
-        return true;
+        if (args.length <= 1) {
+            return true;
+        }
+        return false;
     }
 
     @Override
