@@ -1,6 +1,7 @@
 package org.example.classes.runner;
 
 import org.example.classes.managers.*;
+import org.example.enums.Colors;
 
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class Runner {
 
         managerInputOutput.writeLineIO("=====================================\n");
 
-        List<String[]> data = managerReadWrite.readCSV(this.javaMetaspace);
+        List<String[]> data = managerReadWrite.readCSV(javaMetaspace);
 
         managerInputOutput.writeLineIO("=====================================\n");
 
@@ -33,7 +34,7 @@ public class Runner {
     public void run() {
 
         while (true) {
-            managerInputOutput.writeLineIO("Введите команду : ");
+            managerInputOutput.writeLineIO("Введите команду : ", Colors.BLUE);
             String command = managerInputOutput.readLineIO();
 
             boolean flag = managerParserCommand.parserCommand(command);

@@ -28,6 +28,9 @@ public class ManagerReadWrite implements ReadWrite {
     }
 
     public List<String[]> readCSV(String pathToFile) {
+        if (pathToFile == null) {
+            return new ArrayList<>();
+        }
         List<String[]> data = new ArrayList<>();
 
         try (BufferedReader readCSVFile = new BufferedReader(new FileReader(pathToFile))) {

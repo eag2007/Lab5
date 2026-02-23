@@ -20,7 +20,7 @@ public class Show implements Command {
                 managerInputOutput.writeLineIO(line + "\n");
             }
         } else {
-            managerInputOutput.writeLineIO("Неверное количество аргументов");
+            managerInputOutput.writeLineIO("Неверное количество аргументов\n");
         }
     }
 

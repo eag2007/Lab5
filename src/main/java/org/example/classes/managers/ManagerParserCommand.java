@@ -33,6 +33,7 @@ public class ManagerParserCommand {
         this.commands.put("save", new Save());
         this.commands.put("show", new Show());
         this.commands.put("update", new Update());
+        this.commands.put("ls", new Show());
     }
 
     public boolean parserCommand(String s) {
