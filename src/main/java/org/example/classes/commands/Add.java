@@ -11,12 +11,12 @@ public class Add implements Command {
         if (checkArg(args)) {
             if (!managerInputOutput.isScriptMode()) {
                 managerCollections.addCollections(managerValidationData.validateFromInput());
-                managerInputOutput.writeLineIO("Элемент создан", Colors.GREEN);
+                managerInputOutput.writeLineIO("Элемент создан\n", Colors.GREEN);
             } else {
                 Route element = managerValidationData.validateFromFile();
                 if (element != null) {
                     managerCollections.addCollections(element);
-                    managerInputOutput.writeLineIO("Элемент создан", Colors.GREEN);
+                    managerInputOutput.writeLineIO("Элемент создан\n", Colors.GREEN);
                 } else {
                     managerInputOutput.writeLineIO("Ошибка: невозможно создать элемент\n");
                     managerInputOutput.writeLineIO("[Элемент не создан]\n");
