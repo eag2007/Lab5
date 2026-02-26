@@ -19,7 +19,7 @@ public class ManagerCollections {
     private ZonedDateTime timeInit;
 
     public ManagerCollections() {
-        this.collectionsRoute = new PriorityQueue<>(Route.COMPARATOR_COLLECTIONS);
+        this.collectionsRoute = new PriorityQueue<>();
         this.timeInit = ZonedDateTime.now();
     }
 
@@ -48,7 +48,7 @@ public class ManagerCollections {
 
     public List<Route> getSortedCollections() {
         List<Route> sorted = new ArrayList<>(collectionsRoute);
-        sorted.sort(Route.COMPARATOR_COLLECTIONS);
+        sorted.sort(Comparator.naturalOrder());
         return sorted;
     }
 

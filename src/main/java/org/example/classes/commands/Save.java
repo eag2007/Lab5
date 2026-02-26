@@ -1,5 +1,6 @@
 package org.example.classes.commands;
 
+import org.example.enums.Colors;
 import org.example.interfaces.Command;
 
 import static org.example.classes.runner.Runner.*;
@@ -13,7 +14,7 @@ public class Save implements Command {
                 managerReadWrite.writeCSV(javaMetaspace);
             }
         } else {
-            managerInputOutput.writeLineIO("Неправильное количество аргументов или неправильный тип\n");
+            managerInputOutput.writeLineIO("Неправильное количество аргументов или неправильный тип\n", Colors.RED);
         }
     }
 

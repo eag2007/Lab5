@@ -19,11 +19,11 @@ public class Add implements Command {
                     managerInputOutput.writeLineIO("Элемент создан\n", Colors.GREEN);
                 } else {
                     managerInputOutput.writeLineIO("Ошибка: невозможно создать элемент\n");
-                    managerInputOutput.writeLineIO("[Элемент не создан]\n");
+                    managerInputOutput.writeLineIO("Объект не создан\n", Colors.RED);
                 }
             }
         } else {
-            managerInputOutput.writeLineIO("Неправильное количество элементов\n");
+            managerInputOutput.writeLineIO("Неправильное количество элементов\n", Colors.RED);
         }
     }
 

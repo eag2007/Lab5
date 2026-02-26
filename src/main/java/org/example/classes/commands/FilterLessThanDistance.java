@@ -1,6 +1,7 @@
 package org.example.classes.commands;
 
 import org.example.classes.Route;
+import org.example.enums.Colors;
 import org.example.interfaces.Command;
 
 import java.util.PriorityQueue;
@@ -23,7 +24,7 @@ public class FilterLessThanDistance implements Command {
                 }
             }
         } else {
-            managerInputOutput.writeLineIO("Неправильное количество аргументов или их тип\n");
+            managerInputOutput.writeLineIO("Неправильное количество аргументов или их тип\n", Colors.RED);
         }
     }
 
@@ -34,7 +35,7 @@ public class FilterLessThanDistance implements Command {
                   return true;
               } catch (NumberFormatException e) {
                   managerInputOutput.writeLineIO("Ошибка: аргумент должен быть целым числом в диапазоне от " +
-                          Integer.MIN_VALUE + " до " + Integer.MAX_VALUE + "\n");
+                          Integer.MIN_VALUE + " до " + Integer.MAX_VALUE + "\n", Colors.RED);
                   return false;
               }
 

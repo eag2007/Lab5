@@ -21,7 +21,7 @@ public class ExecuteScript implements Command {
 
     public void executeCommand(String[] args) {
         if (!checkArg(args)) {
-            managerInputOutput.writeLineIO("Ошибка, синтаксис команды: execute_script file_name\n");
+            managerInputOutput.writeLineIO("Ошибка, синтаксис команды: execute_script file_name\n", Colors.RED);
             return;
         }
 
@@ -33,14 +33,14 @@ public class ExecuteScript implements Command {
         }
 
         if (!file.exists()) {
-            managerInputOutput.writeLineIO("Ошибка: файл '" + fileName + "' не найден\n");
+            managerInputOutput.writeLineIO("Ошибка: файл '" + fileName + "' не найден\n", Colors.RED);
             return;
         }
 
         String pathFile = file.getAbsolutePath();
 
         if (setPaths.contains(pathFile)) {
-            managerInputOutput.writeLineIO("Ошибка: рекурсия в скрипте " + fileName + "\n");
+            managerInputOutput.writeLineIO("Ошибка: рекурсия в скрипте " + fileName + "\n", Colors.RED);
             return;
         }
 
@@ -63,7 +63,7 @@ public class ExecuteScript implements Command {
             managerInputOutput.writeLineIO("Скрипт выполнен\n", Colors.GREEN);
 
         } catch (IOException e) {
-            managerInputOutput.writeLineIO("Ошибка: " + e.getMessage() + "\n");
+            managerInputOutput.writeLineIO("Ошибка: " + e.getMessage() + "\n", Colors.RED);
         } finally {
             setPaths.remove(pathFile);
             managerInputOutput.setConsoleExecute();

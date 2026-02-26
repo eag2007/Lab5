@@ -1,5 +1,6 @@
 package org.example.classes.commands;
 
+import org.example.enums.Colors;
 import org.example.interfaces.Command;
 
 import static org.example.classes.runner.Runner.managerCollections;
@@ -10,7 +11,7 @@ public class Clear implements Command {
         if (checkArg(args)) {
             managerCollections.clearCollections();
         } else {
-            managerInputOutput.writeLineIO("Неправильное количество аргументов\n");
+            managerInputOutput.writeLineIO("Неправильное количество аргументов\n", Colors.RED);
         }
     }
 

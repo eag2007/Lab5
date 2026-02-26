@@ -1,6 +1,6 @@
 package org.example.classes.commands;
 
-import org.example.classes.Route;
+import org.example.enums.Colors;
 import org.example.interfaces.Command;
 
 import static org.example.classes.runner.Runner.managerCollections;
@@ -14,7 +14,7 @@ public class Info implements Command {
             managerInputOutput.writeLineIO("Время инициализации: " + managerCollections.getTimeInit() + "\n");
             managerInputOutput.writeLineIO("Тип данных: Route\n");
         } else {
-            managerInputOutput.writeLineIO("Неверное количество аргументов\n");
+            managerInputOutput.writeLineIO("Неверное количество аргументов\n", Colors.RED);
         }
     }
 

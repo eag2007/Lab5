@@ -4,6 +4,7 @@ import org.example.enums.Colors;
 import org.example.classes.Route;
 import org.example.interfaces.Command;
 
+import java.util.Comparator;
 import java.util.PriorityQueue;
 
 import static org.example.classes.runner.Runner.*;
@@ -11,16 +12,27 @@ import static org.example.classes.runner.Runner.*;
 public class AddIfMax implements Command {
     public void executeCommand(String[] args) {
         if (checkArg(args)) {
-            Route newRoute = managerValidationData.validateFromInput();
+            Route newRoute;
+
+            if (managerInputOutput.isScriptMode()) {
+                newRoute = managerValidationData.validateFromFile();
+            } else {
+                newRoute = managerValidationData.validateFromInput();
+            }
 
             PriorityQueue<Route> routes = managerCollections.getCollectionsRoute();
 
+            if (newRoute == null) {
+                managerInputOutput.writeLineIO("Объект не создан (неправильно введены поля)\n", Colors.RED);
+                return;
+            }
+
             if (!routes.isEmpty()) {
                 Route maxRoute = routes.stream()
-                        .max(Route.COMPARATOR_COLLECTIONS)
+                        .max(Comparator.naturalOrder())
                         .orElse(null);
 
-                if (maxRoute != null && Route.COMPARATOR_COLLECTIONS.compare(newRoute, maxRoute) > 0) {
+                if (maxRoute != null && newRoute.compareTo(maxRoute) > 0) {
                     managerCollections.addCollections(newRoute);
                     managerInputOutput.writeLineIO("Элемент добавлен в коллекцию (превышает максимальный)\n", Colors.GREEN);
                 } else {
@@ -31,7 +43,7 @@ public class AddIfMax implements Command {
                 managerInputOutput.writeLineIO("Коллекция была пуста, элемент добавлен\n");
             }
         } else {
-            managerInputOutput.writeLineIO("Неправильное количество аргументов\n");
+            managerInputOutput.writeLineIO("Неправильное количество аргументов\n", Colors.RED);
         }
     }
 

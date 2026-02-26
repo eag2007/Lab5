@@ -7,7 +7,7 @@ import java.util.Comparator;
 
 import static org.example.classes.runner.Runner.managerInputOutput;
 
-public class Route {
+public class Route implements Comparable<Route> {
     private long id; //Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private String name; //Поле не может быть null, Строка не может быть пустой
     private Coordinates coordinates; //Поле не может быть null
@@ -16,7 +16,6 @@ public class Route {
     private Location to; //Поле не может быть null
     private Integer distance; //Поле может быть null, Значение поля должно быть больше 1
 
-    /*
     @Override
     public int compareTo(Route o) {
         int idCompare = Long.compare(this.id, o.id);
@@ -66,14 +65,15 @@ public class Route {
         }
 
         return Integer.compare(this.distance, o.distance);
-    }*/
-    public static Comparator<Route> COMPARATOR_COLLECTIONS = Comparator
-            .comparingLong(Route::getId)
-            .thenComparing(Route::getDistance)
-            .thenComparing(Route::getName)
-            .thenComparing(Route::getFrom, Comparator.nullsLast(Comparator.comparing(Location::getX).thenComparing(Location::getY).thenComparing(Location::getZ)))
-            .thenComparing(Route::getTo, Comparator.comparing(Location::getX).thenComparing(Location::getY).thenComparing(Location::getZ))
-            .thenComparing(Route::getCreationDate);
+    }
+
+//    public static Comparator<Route> COMPARATOR_COLLECTIONS = Comparator
+//            .comparingLong(Route::getId)
+//            .thenComparing(Route::getDistance)
+//            .thenComparing(Route::getName)
+//            .thenComparing(Route::getFrom, Comparator.nullsLast(Comparator.comparing(Location::getX).thenComparing(Location::getY).thenComparing(Location::getZ)))
+//            .thenComparing(Route::getTo, Comparator.comparing(Location::getX).thenComparing(Location::getY).thenComparing(Location::getZ))
+//            .thenComparing(Route::getCreationDate);
 
     public Route(String name, Coordinates coordinates, Location from, Location to, Integer distance) {
         this.id = ManagerGenerateId.generateId();

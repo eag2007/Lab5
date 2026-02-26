@@ -12,7 +12,7 @@ public class Update implements Command {
             managerCollections.updateCollections(Long.parseLong(args[0]));
             managerInputOutput.writeLineIO("Элемент обновлён", Colors.GREEN);
         } else {
-            managerInputOutput.writeLineIO("Неправильный порядок аргументов или их тип\n");
+            managerInputOutput.writeLineIO("Неправильный порядок аргументов или их тип\n", Colors.RED);
         }
     }
 

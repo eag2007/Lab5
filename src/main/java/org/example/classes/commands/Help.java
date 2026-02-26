@@ -1,5 +1,6 @@
 package org.example.classes.commands;
 
+import org.example.enums.Colors;
 import org.example.interfaces.Command;
 import org.example.classes.runner.Runner;
 
@@ -16,7 +17,7 @@ public class Help implements Command{
             }
             managerInputOutput.writeLineIO("------------------------------------------------------\n");
         } else {
-            managerInputOutput.writeLineIO("Неверное количество аргументов\n");
+            managerInputOutput.writeLineIO("Неверное количество аргументов\n", Colors.RED);
         }
     }
 

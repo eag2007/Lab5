@@ -1,6 +1,7 @@
 package org.example.classes.commands;
 
 import org.example.classes.Route;
+import org.example.enums.Colors;
 import org.example.interfaces.Command;
 
 import java.util.PriorityQueue;
@@ -23,7 +24,7 @@ public class AverageOfDistance implements Command {
             }
             managerInputOutput.writeLineIO("Среднее значение distance всех элементов : " + distance + "\n");
         } else {
-            managerInputOutput.writeLineIO("Неправильное количество аргументов\n");
+            managerInputOutput.writeLineIO("Неправильное количество аргументов\n", Colors.RED);
         }
     }
 

@@ -1,6 +1,7 @@
 package org.example.classes.commands;
 
 import org.example.classes.Route;
+import org.example.enums.Colors;
 import org.example.interfaces.Command;
 
 import java.util.PriorityQueue;
@@ -23,7 +24,7 @@ public class RemoveById implements Command {
                 return true;
             } catch (NumberFormatException e) {
                 managerInputOutput.writeLineIO("Ошибка: аргумент должен быть целым числом в диапазоне от " +
-                        Long.MIN_VALUE + " до " + Long.MAX_VALUE + "\n");
+                        Long.MIN_VALUE + " до " + Long.MAX_VALUE + "\n", Colors.RED);
                 return false;
             }
         }

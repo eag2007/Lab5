@@ -1,5 +1,6 @@
 package org.example.classes.commands;
 
+import org.example.enums.Colors;
 import org.example.interfaces.Command;
 
 import static org.example.classes.runner.Runner.managerCollections;
@@ -10,7 +11,7 @@ public class RemoveFirst implements Command {
         if (checkArg(args)){
             managerCollections.removeFirstCollections();
         } else {
-            managerInputOutput.writeLineIO("Неверное количество аргументов\n");
+            managerInputOutput.writeLineIO("Неверное количество аргументов\n", Colors.RED);
         }
     }
 
