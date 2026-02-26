@@ -90,9 +90,11 @@ public class ManagerInputOutput implements InputOutput {
                     return line;
                 } else {
                     setConsoleExecute();
+                    return null;
                 }
             } catch (IOException e) {
                 setConsoleExecute();
+                return null;
             }
         }
         return this.in.nextLine();

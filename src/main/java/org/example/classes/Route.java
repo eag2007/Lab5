@@ -153,7 +153,6 @@ public class Route implements Comparable<Route> {
         this.distance = distance;
     }
 
-    // Геттеры
     public long getId() { return this.id; }
     public ZonedDateTime getCreationDate() { return this.creationDate; }
     public String getName() { return this.name; }

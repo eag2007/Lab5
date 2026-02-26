@@ -9,3 +9,9 @@ add_if_max
 16.5
 4
 23
+clear
+show
+
+
+
+info

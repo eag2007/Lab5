@@ -71,7 +71,7 @@ public class ExecuteScript implements Command {
             String line;
             int lineNumber = 0;
 
-            while ((line = reader.readLine()) != null) {
+            while ((line = managerInputOutput.readLineIO()) != null) {
                 lineNumber++;
                 line = line.trim();
                 if (line.isEmpty()) continue;
