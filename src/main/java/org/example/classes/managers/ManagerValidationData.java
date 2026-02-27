@@ -12,27 +12,31 @@ public class ManagerValidationData {
 
     public Route validateFromFile() {
         String name = managerInputOutput.readLineIO();
-        String coordinatesX = managerInputOutput.readLineIO();
-        String coordinatesY = managerInputOutput.readLineIO();
-        String locationFromX = managerInputOutput.readLineIO();
-        String locationFromY = managerInputOutput.readLineIO();
-        String locationFromZ = managerInputOutput.readLineIO();
-        String locationToX = managerInputOutput.readLineIO();
-        String locationToY = managerInputOutput.readLineIO();
-        String locationToZ = managerInputOutput.readLineIO();
-        String distance = managerInputOutput.readLineIO();
 
         if (name == null || name.trim().isEmpty()) {
-            managerInputOutput.writeLineIO("Ошибка: name не может быть пустым");
+            managerInputOutput.writeLineIO("Ошибка: name не может быть пустым\n");
             return null;
         }
 
         long coordx, coordy;
+
+        String coordinatesX = managerInputOutput.readLineIO();
+
+        if (coordinatesX == null) {
+            return null;
+        }
+
         try {
             coordx = Long.parseLong(coordinatesX.trim());
             if (coordx <= 0 || coordx > 108) throw new NumberFormatException();
         } catch (NumberFormatException e) {
             managerInputOutput.writeLineIO("Ошибка: X coordinates должно быть числом от 1 до 108\n");
+            return null;
+        }
+
+        String coordinatesY = managerInputOutput.readLineIO();
+
+        if (coordinatesY == null) {
             return null;
         }
 
@@ -48,6 +52,12 @@ public class ManagerValidationData {
         Double locaYFrom;
         int locaZFrom;
 
+        String locationFromX = managerInputOutput.readLineIO();
+
+        if (locationFromX == null) {
+            return null;
+        }
+
         try {
             locaXFrom = Float.parseFloat(locationFromX.trim().replace(',', '.'));
         } catch (NumberFormatException e) {
@@ -55,10 +65,22 @@ public class ManagerValidationData {
             return null;
         }
 
+        String locationFromY = managerInputOutput.readLineIO();
+
+        if (locationFromY == null) {
+            return null;
+        }
+
         try {
             locaYFrom = Double.parseDouble(locationFromY.trim().replace(',', '.'));
         } catch (NumberFormatException e) {
             managerInputOutput.writeLineIO("Ошибка: Y location from должно быть числом\n");
+            return null;
+        }
+
+        String locationFromZ = managerInputOutput.readLineIO();
+
+        if (locationFromZ == null) {
             return null;
         }
 
@@ -73,6 +95,12 @@ public class ManagerValidationData {
         Double locaYTo;
         int locaZTo;
 
+        String locationToX = managerInputOutput.readLineIO();
+
+        if (locationToX == null) {
+            return null;
+        }
+
         try {
             locaXTo = Float.parseFloat(locationToX.trim().replace(',', '.'));
         } catch (NumberFormatException e) {
@@ -80,10 +108,22 @@ public class ManagerValidationData {
             return null;
         }
 
+        String locationToY = managerInputOutput.readLineIO();
+
+        if (locationToY == null) {
+            return null;
+        }
+
         try {
             locaYTo = Double.parseDouble(locationToY.trim().replace(',', '.'));
         } catch (NumberFormatException e) {
             managerInputOutput.writeLineIO("Ошибка: Y location to должно быть числом\n");
+            return null;
+        }
+
+        String locationToZ = managerInputOutput.readLineIO();
+
+        if (locationToZ == null) {
             return null;
         }
 
@@ -95,6 +135,13 @@ public class ManagerValidationData {
         }
 
         int dist;
+
+        String distance = managerInputOutput.readLineIO();
+
+        if (distance == null) {
+            return null;
+        }
+
         try {
             dist = Integer.parseInt(distance.trim());
             if (dist <= 1) throw new NumberFormatException();

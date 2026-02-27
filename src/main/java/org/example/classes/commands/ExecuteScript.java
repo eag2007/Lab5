@@ -64,8 +64,6 @@ public class ExecuteScript implements Command {
                 line = line.trim();
                 if (line.isEmpty()) continue;
 
-                managerInputOutput.writeLineIO("Строка " + lineNumber + ": " + line + "\n");
-
                 managerParserCommand.parserCommand(line);
 
                 if (!managerInputOutput.isCurrentReader(reader)) {
