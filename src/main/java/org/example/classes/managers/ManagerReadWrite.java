@@ -14,7 +14,6 @@ import java.util.PriorityQueue;
 import static org.example.classes.runner.Runner.managerCollections;
 import static org.example.classes.runner.Runner.managerInputOutput;
 
-
 public class ManagerReadWrite implements ReadWrite {
     private static ManagerReadWrite managerReadWrite;
 
@@ -32,64 +31,94 @@ public class ManagerReadWrite implements ReadWrite {
         if (pathToFile == null) {
             return new ArrayList<>();
         }
-        List<String[]> data = new ArrayList<>();
 
-        try (BufferedReader readCSVFile = new BufferedReader(new FileReader(pathToFile))) {
-            String line;
-            line = readCSVFile.readLine(); // Чтение заголовка
-            while (line != null) {
-                if (!line.trim().isEmpty()) {
-                    data.add(line.split(";"));
+        List<String[]> data = new ArrayList<>();
+        File file = new File(pathToFile);
+
+        if (!file.exists()) {
+            managerInputOutput.writeLineIO("Файл не найден: " + pathToFile + "\n", Colors.RED);
+            return data;
+        }
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line = reader.readLine();
+            int lineNumber = 1;
+            ManagerValidationData validator = new ManagerValidationData();
+
+            while ((line = reader.readLine()) != null) {
+                lineNumber++;
+                if (line.trim().isEmpty()) continue;
+
+                String[] fields = line.split(";");
+
+                if (!validator.validateCSVFields(fields, lineNumber)) {
+                    managerInputOutput.writeLineIO("Ошибка в строке " + lineNumber + ". Файл не загружен\n", Colors.RED);
+                    return new ArrayList<>();
                 }
-                line = readCSVFile.readLine();
+
+                data.add(fields);
             }
-            managerInputOutput.writeLineIO("Загружено строк: " + (data.size() - 1) + "\n", Colors.GREEN);
+
+            managerInputOutput.writeLineIO("Загружено строк: " + data.size() + "\n", Colors.GREEN);
+
         } catch (IOException e) {
-            managerInputOutput.writeLineIO("Ошибка чтение файла коллекция пуста: " + e.getMessage() + "\n");
+            managerInputOutput.writeLineIO("Ошибка чтения: " + e.getMessage() + "\n", Colors.RED);
         }
 
         return data;
     }
 
     public boolean writeCSV(String pathToFile) {
+        if (pathToFile == null || pathToFile.trim().isEmpty()) {
+            managerInputOutput.writeLineIO("Ошибка: путь не указан\n", Colors.RED);
+            return false;
+        }
+
+        File file = new File(pathToFile);
+
+        if (!pathToFile.toLowerCase().endsWith(".csv")) {
+            managerInputOutput.writeLineIO("Ошибка: файл должен быть с расширением .csv\n", Colors.RED);
+            return false;
+        }
+
+        File parentDir = file.getParentFile();
+        if (parentDir != null && !parentDir.exists()) {
+            managerInputOutput.writeLineIO("Ошибка: директория " + parentDir + " не существует\n", Colors.RED);
+            return false;
+        }
+
         PriorityQueue<Route> routes = managerCollections.getCollectionsRoute();
 
         try (OutputStreamWriter writer = new OutputStreamWriter(
-                new FileOutputStream(pathToFile), StandardCharsets.UTF_8)) {
+                new FileOutputStream(file), StandardCharsets.UTF_8)) {
 
-            writer.write("id;name;coordinates_x;coordinates_y;creation_date;from_x;from_y;from_z;to_x;to_y;to_z;distance");
-            writer.write("\n");
+            writer.write("id;name;coordinates_x;coordinates_y;creation_date;from_x;from_y;from_z;to_x;to_y;to_z;distance\n");
 
             for (Route route : routes) {
-                StringBuilder line = new StringBuilder();
-                line.append(route.getId()).append(";");
-                line.append(route.getName()).append(";");
-                line.append(route.getCoordinates().getX()).append(";");
-                line.append(route.getCoordinates().getY()).append(";");
-
-                ZonedDateTime creationDate = route.getCreationDate();
-                line.append(creationDate).append(";");
-
-                line.append(route.getFrom().getX()).append(";");
-                line.append(route.getFrom().getY()).append(";");
-                line.append(route.getFrom().getZ()).append(";");
-
-                line.append(route.getTo().getX()).append(";");
-                line.append(route.getTo().getY()).append(";");
-                line.append(route.getTo().getZ()).append(";");
-
-                line.append(route.getDistance());
-
-                writer.write(line.toString());
-                writer.write("\n");
+                String line = route.getId() + ";" +
+                        route.getName() + ";" +
+                        route.getCoordinates().getX() + ";" +
+                        route.getCoordinates().getY() + ";" +
+                        route.getCreationDate() + ";" +
+                        route.getFrom().getX() + ";" +
+                        route.getFrom().getY() + ";" +
+                        route.getFrom().getZ() + ";" +
+                        route.getTo().getX() + ";" +
+                        route.getTo().getY() + ";" +
+                        route.getTo().getZ() + ";" +
+                        route.getDistance() + "\n";
+                writer.write(line);
             }
 
             writer.flush();
-            managerInputOutput.writeLineIO("Успешно записано " + routes.size() + " маршрутов\n", Colors.GREEN);
+            managerInputOutput.writeLineIO("Сохранено " + routes.size() + " маршрутов в " + pathToFile + "\n", Colors.GREEN);
             return true;
 
+        } catch (FileNotFoundException e) {
+            managerInputOutput.writeLineIO("Ошибка: невозможно создать файл\n", Colors.RED);
+            return false;
         } catch (IOException e) {
-            managerInputOutput.writeLineIO("Ошибка при записи: " + e.getMessage() + "\n");
+            managerInputOutput.writeLineIO("Ошибка записи: " + e.getMessage() + "\n", Colors.RED);
             return false;
         }
     }

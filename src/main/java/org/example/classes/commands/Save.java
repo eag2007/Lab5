@@ -3,6 +3,8 @@ package org.example.classes.commands;
 import org.example.enums.Colors;
 import org.example.interfaces.Command;
 
+import java.io.File;
+
 import static org.example.classes.runner.Runner.*;
 
 public class Save implements Command {
@@ -10,7 +12,13 @@ public class Save implements Command {
     public void executeCommand(String[] args) {
         if (checkArg(args)) {
             if (args.length == 1) {
-                managerReadWrite.writeCSV(args[0]);
+                File file = new File(args[0]);
+
+                if (file.exists() && file.isDirectory()) {
+                    managerInputOutput.writeLineIO("Это директория, а не файл\n", Colors.RED);
+                } else {
+                    managerReadWrite.writeCSV(args[0]);
+                }
             } else {
                 managerReadWrite.writeCSV(javaMetaspace);
             }
