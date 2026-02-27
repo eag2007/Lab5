@@ -15,7 +15,7 @@ import static org.example.classes.runner.Runner.managerCollections;
 import static org.example.classes.runner.Runner.managerInputOutput;
 
 /**
- * Менеджер для чтения и записи коллекции в CSV-файлы (Singleton).
+ * Менеджер для чтения и записи коллекции в CSV-файлы.
  * <p>
  * Обеспечивает импорт коллекции из файла при запуске и экспорт при выполнении команды {@code save}.
  * </p>

@@ -6,31 +6,7 @@ import org.example.interfaces.Command;
 
 import static org.example.classes.runner.Runner.*;
 
-/**
- * Команда {@code add} добавляет новый элемент в коллекцию.
- * <p>
- * В зависимости от режима работы (консольный или скриптовый) запрашивает ввод данных
- * у пользователя или читает их из файла. После успешного создания объекта {@link Route}
- * добавляет его в коллекцию.
- * </p>
- *
- * @author
- * @version 1.0
- * @see Command
- * @see Route
- */
 public class Add implements Command {
-
-    /**
-     * Выполняет команду добавления элемента.
-     * <p>
-     * Сначала проверяется корректность аргументов команды. Затем, в зависимости от режима,
-     * вызывается соответствующий метод валидации для создания объекта {@code Route}.
-     * В случае успеха объект добавляется в коллекцию.
-     * </p>
-     *
-     * @param args аргументы команды (ожидается отсутствие аргументов или аргумент "Route")
-     */
     public void executeCommand(String[] args) {
         if (checkArg(args)) {
             if (!managerInputOutput.isScriptMode()) {
@@ -51,15 +27,6 @@ public class Add implements Command {
         }
     }
 
-    /**
-     * Проверяет аргументы команды.
-     * <p>
-     * Команда считается корректной, если массив аргументов пуст или содержит один элемент "Route".
-     * </p>
-     *
-     * @param args массив аргументов для проверки
-     * @return {@code true}, если аргументы корректны, иначе {@code false}
-     */
     public boolean checkArg(String[] args) {
         if (args.length == 0) {
             return true;
@@ -70,11 +37,6 @@ public class Add implements Command {
         return false;
     }
 
-    /**
-     * Возвращает строковое представление команды для справки.
-     *
-     * @return описание команды
-     */
     @Override
     public String toString() {
         return "add - добавляет новый элемент в коллекцию";

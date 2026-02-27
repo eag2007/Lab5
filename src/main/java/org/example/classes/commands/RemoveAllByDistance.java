@@ -9,27 +9,8 @@ import java.util.PriorityQueue;
 import static org.example.classes.runner.Runner.managerCollections;
 import static org.example.classes.runner.Runner.managerInputOutput;
 
-/**
- * Команда {@code remove_all_by_distance} удаляет все элементы,
- * значение поля {@code distance} которых эквивалентно заданному.
- *
- * @author
- * @version 1.0
- * @see Command
- * @see Route#getDistance()
- */
 public class RemoveAllByDistance implements Command {
 
-    /**
-     * Выполняет команду удаления по расстоянию.
-     * <p>
-     * Принимает целое число (distance) в качестве аргумента.
-     * Создает новую очередь, в которую добавляются только элементы с другим {@code distance},
-     * после чего заменяет старую коллекцию новой.
-     * </p>
-     *
-     * @param args аргументы команды, где args[0] — значение для удаления
-     */
     public void executeCommand(String[] args) {
         if (checkArg(args)) {
             Integer distance = Integer.parseInt(args[0]);
@@ -48,15 +29,6 @@ public class RemoveAllByDistance implements Command {
         }
     }
 
-    /**
-     * Проверяет аргументы команды.
-     * <p>
-     * Убеждается, что передан ровно один аргумент, и его можно корректно преобразовать в целое число.
-     * </p>
-     *
-     * @param args массив аргументов для проверки
-     * @return {@code true}, если аргумент корректен, иначе {@code false}
-     */
     public boolean checkArg(String[] args) {
         if (args.length == 1) {
             try {
@@ -71,11 +43,6 @@ public class RemoveAllByDistance implements Command {
         return false;
     }
 
-    /**
-     * Возвращает строковое представление команды для справки.
-     *
-     * @return описание команды
-     */
     @Override
     public String toString() {
         return "remove_all_by_distance distance - удаляет все " +

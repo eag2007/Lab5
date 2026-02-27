@@ -8,30 +8,11 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * Менеджер для парсинга и выполнения пользовательских команд.
- * <p>
- * Содержит реестр доступных команд ({@link HashMap}), хранит историю выполненных команд
- * и предоставляет методы для их выполнения и получения информации о них.
- * </p>
- *
- * @author
- * @version 1.0
- */
 public class ManagerParserCommand {
-    /** Реестр команд, где ключ — имя команды, значение — объект команды. */
     private final HashMap<String, Command> commands;
-    /** История последних выполненных команд. */
     private final List<String> historyCommands;
-    /** Максимальный размер истории команд. */
     private static final int MAX_SIZE_LEN_HISTORY = 14;
 
-    /**
-     * Конструктор, инициализирующий реестр команд и список истории.
-     * <p>
-     * Регистрирует все доступные команды.
-     * </p>
-     */
     public ManagerParserCommand() {
         this.commands = new HashMap<String, Command>();
         this.historyCommands = new ArrayList<>(MAX_SIZE_LEN_HISTORY);
@@ -55,16 +36,6 @@ public class ManagerParserCommand {
         this.commands.put("ls", new Show()); // Алиас для show
     }
 
-    /**
-     * Парсит и выполняет команду, введенную пользователем.
-     * <p>
-     * Разделяет ввод на имя команды и аргументы. Если команда найдена в реестре,
-     * вызывает её метод {@code executeCommand} и добавляет команду в историю.
-     * </p>
-     *
-     * @param s строка, введенная пользователем
-     * @return {@code true}, если команда распознана и выполнена, иначе {@code false}
-     */
     public boolean parserCommand(String s) {
         String[] command = s.trim().replaceAll("\\s+", " ").split(" ");
 
@@ -81,22 +52,12 @@ public class ManagerParserCommand {
         return false;
     }
 
-    /**
-     * Возвращает список всех доступных команд.
-     *
-     * @return список объектов {@link Command}
-     */
     public List<Command> getCommands() {
         List<Command> commandsList = new ArrayList<>();
         commandsList.addAll(this.commands.values());
         return commandsList;
     }
 
-    /**
-     * Возвращает историю выполненных команд.
-     *
-     * @return список последних команд
-     */
     public List<String> getHistoryCommands() {
         return historyCommands;
     }

@@ -12,4 +12,5 @@ package org.example.interfaces;
  * @see org.example.classes.managers.ManagerInputOutput
  */
 public interface InputOutput {
+
 }

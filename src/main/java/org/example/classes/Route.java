@@ -4,42 +4,15 @@ import org.example.classes.managers.ManagerGenerateId;
 
 import java.time.ZonedDateTime;
 
-/**
- * Класс, представляющий основной объект коллекции — маршрут.
- * <p>
- * Содержит все поля, соответствующие техническому заданию. Реализует {@link Comparable}
- * для определения естественного порядка сортировки в {@link java.util.PriorityQueue}.
- * </p>
- *
- * @author
- * @version 1.0
- * @see Comparable
- */
 public class Route implements Comparable<Route> {
-    /** Уникальный идентификатор. Значение поля должно быть больше 0, уникально, генерируется автоматически. */
     private long id;
-    /** Название маршрута. Поле не может быть null, строка не может быть пустой. */
     private String name;
-    /** Координаты. Поле не может быть null. */
     private Coordinates coordinates;
-    /** Дата создания. Поле не может быть null, генерируется автоматически. */
     private java.time.ZonedDateTime creationDate;
-    /** Локация отправления. Поле может быть null. */
     private Location from;
-    /** Локация назначения. Поле не может быть null. */
     private Location to;
-    /** Расстояние. Поле может быть null, значение должно быть больше 1. */
     private Integer distance;
 
-    /**
-     * Сравнивает текущий маршрут с другим для определения порядка.
-     * <p>
-     * Порядок сравнения: ID -> Name -> Coordinates -> CreationDate -> From (null считается меньшим) -> To -> Distance (null считается меньшим).
-     * </p>
-     *
-     * @param o объект для сравнения
-     * @return отрицательное число, 0 или положительное число, если текущий объект меньше, равен или больше указанного
-     */
     @Override
     public int compareTo(Route o) {
         int idCompare = Long.compare(this.id, o.id);
@@ -91,15 +64,6 @@ public class Route implements Comparable<Route> {
         return Integer.compare(this.distance, o.distance);
     }
 
-    /**
-     * Конструктор для создания нового маршрута (ID и дата генерируются автоматически).
-     *
-     * @param name        название маршрута
-     * @param coordinates координаты
-     * @param from        локация отправления
-     * @param to          локация назначения
-     * @param distance    расстояние
-     */
     public Route(String name, Coordinates coordinates, Location from, Location to, Integer distance) {
         this.id = ManagerGenerateId.generateId();
         this.creationDate = ZonedDateTime.now();
@@ -110,17 +74,6 @@ public class Route implements Comparable<Route> {
         this.distance = distance;
     }
 
-    /**
-     * Конструктор для создания маршрута с заданным ID (дата генерируется автоматически).
-     * Используется при обновлении элемента.
-     *
-     * @param id          идентификатор
-     * @param name        название
-     * @param coordinates координаты
-     * @param from        локация отправления
-     * @param to          локация назначения
-     * @param distance    расстояние
-     */
     public Route(long id, String name, Coordinates coordinates, Location from, Location to, Integer distance) {
         this.id = id;
         this.creationDate = ZonedDateTime.now();
@@ -131,18 +84,6 @@ public class Route implements Comparable<Route> {
         this.distance = distance;
     }
 
-    /**
-     * Конструктор для создания маршрута с заданными ID и датой создания.
-     * Используется при импорте из файла.
-     *
-     * @param id           идентификатор
-     * @param name         название
-     * @param coordinates  координаты
-     * @param creationDate дата создания
-     * @param from         локация отправления
-     * @param to           локация назначения
-     * @param distance     расстояние
-     */
     public Route(long id, String name, Coordinates coordinates, ZonedDateTime creationDate, Location from, Location to, Integer distance) {
         this.id = id;
         this.creationDate = creationDate;

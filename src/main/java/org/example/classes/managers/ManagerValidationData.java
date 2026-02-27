@@ -8,48 +8,8 @@ import java.text.NumberFormat;
 
 import static org.example.classes.runner.Runner.managerInputOutput;
 
-/**
- * Менеджер для валидации вводимых данных и создания объектов {@link Route}.
- * <p>
- * Этот класс отвечает за:
- * <ul>
- *   <li>Валидацию пользовательского ввода в консольном режиме</li>
- *   <li>Валидацию данных из файлов в режиме выполнения скрипта</li>
- *   <li>Создание объектов {@link Route} с проверкой всех ограничений полей</li>
- *   <li>Циклический запрос данных до получения корректных значений</li>
- * </ul>
- *
- * Класс тесно взаимодействует с {@link ManagerInputOutput} для получения данных
- * и вывода сообщений об ошибках пользователю.
- *
- * @author
- * @version 1.0
- * @see Route
- * @see Coordinates
- * @see Location
- * @see ManagerInputOutput
- */
 public class ManagerValidationData {
 
-    /**
-     * Создает объект {@code Route} из данных, читаемых из файла (скриптовый режим).
-     * <p>
-     * Метод последовательно читает 10 строк из файла, представляющих все поля объекта {@link Route}.
-     * Каждое поле проходит валидацию в соответствии с ограничениями:
-     * <ul>
-     *   <li>name - не может быть пустым или null</li>
-     *   <li>coordinates X - число от 1 до 108</li>
-     *   <li>coordinates Y - число от 1 до 108</li>
-     *   <li>location X - число с плавающей точкой</li>
-     *   <li>location Y - число с плавающей точкой (Double)</li>
-     *   <li>location Z - целое число</li>
-     *   <li>distance - целое число больше 1</li>
-     * </ul>
-     * В случае ошибки валидации любого поля метод возвращает {@code null}.
-     *
-     * @return созданный объект {@code Route} при успешной валидации,
-     *         или {@code null} при ошибке в любом поле
-     */
     public Route validateFromFile() {
         String name = managerInputOutput.readLineIO();
         String coordinatesX = managerInputOutput.readLineIO();
@@ -150,23 +110,6 @@ public class ManagerValidationData {
         return new Route(name, coordinates, from, to, dist);
     }
 
-    /**
-     * Создает объект {@code Route} из данных, вводимых пользователем в консоли.
-     * <p>
-     * Метод последовательно вызывает специализированные методы валидации для каждого поля:
-     * <ol>
-     *   <li>{@link #validateSetName()} - валидация названия</li>
-     *   <li>{@link #validateSetCoordinatesX()} - валидация X координаты</li>
-     *   <li>{@link #validateSetCoordinatesY()} - валидация Y координаты</li>
-     *   <li>{@link #validateSetLocationX()} - валидация X локации (для from и to)</li>
-     *   <li>{@link #validateSetLocationY()} - валидация Y локации (для from и to)</li>
-     *   <li>{@link #validateSetLocationZ()} - валидация Z локации (для from и to)</li>
-     *   <li>{@link #validateSetDistance()} - валидация расстояния</li>
-     * </ol>
-     * ID и дата создания генерируются автоматически в конструкторе {@link Route}.
-     *
-     * @return созданный объект {@code Route} с автоматически сгенерированным ID
-     */
     public Route validateFromInput() {
         String name = validateSetName();
         Coordinates coordinates = new Coordinates(validateSetCoordinatesX(), validateSetCoordinatesY());
@@ -176,17 +119,6 @@ public class ManagerValidationData {
         return new Route(name, coordinates, locationFrom, locationTo, distance);
     }
 
-    /**
-     * Создает объект {@code Route} с заданным ID из данных, вводимых пользователем.
-     * <p>
-     * Используется при обновлении существующего элемента коллекции.
-     * В отличие от {@link #validateFromInput()}, этот метод позволяет указать конкретный ID
-     * для создаваемого объекта, что необходимо для сохранения идентификатора при обновлении.
-     *
-     * @param id идентификатор для нового (обновленного) объекта
-     * @return созданный объект {@code Route} с указанным ID
-     * @see #validateFromInput()
-     */
     public Route validateFromInput(long id) {
         String name = validateSetName();
         Coordinates coordinates = new Coordinates(validateSetCoordinatesX(), validateSetCoordinatesY());
@@ -196,14 +128,6 @@ public class ManagerValidationData {
         return new Route(id, name, coordinates, locationFrom, locationTo, distance);
     }
 
-    /**
-     * Валидирует и возвращает название маршрута.
-     * <p>
-     * Запрашивает ввод названия у пользователя и проверяет, что оно не пустое.
-     * В случае пустого ввода цикл повторяется до получения непустой строки.
-     *
-     * @return валидное название маршрута (непустая строка)
-     */
     public String validateSetName() {
         managerInputOutput.writeLineIO("Введите name : ");
         String name = managerInputOutput.readLineIO();
@@ -216,20 +140,6 @@ public class ManagerValidationData {
         return name;
     }
 
-    /**
-     * Валидирует и возвращает Y координату для {@link Coordinates}.
-     * <p>
-     * Запрашивает ввод и проверяет следующие условия:
-     * <ul>
-     *   <li>Значение не может быть пустым</li>
-     *   <li>Должно быть целым числом типа long</li>
-     *   <li>Должно быть в диапазоне (0, 20]</li>
-     * </ul>
-     * При несоответствии любому условию выводится соответствующее сообщение
-     * и ввод повторяется.
-     *
-     * @return валидное значение Y координаты
-     */
     public long validateSetCoordinatesY() {
         managerInputOutput.writeLineIO("Введите Y для Coordinates : ");
 
@@ -257,20 +167,6 @@ public class ManagerValidationData {
         }
     }
 
-    /**
-     * Валидирует и возвращает X координату для {@link Coordinates}.
-     * <p>
-     * Запрашивает ввод и проверяет следующие условия:
-     * <ul>
-     *   <li>Значение не может быть пустым</li>
-     *   <li>Должно быть целым числом типа long</li>
-     *   <li>Должно быть в диапазоне (0, 108]</li>
-     * </ul>
-     * При несоответствии любому условию выводится соответствующее сообщение
-     * и ввод повторяется.
-     *
-     * @return валидное значение X координаты
-     */
     public long validateSetCoordinatesX() {
         managerInputOutput.writeLineIO("Введите X для Coordinates : ");
 
@@ -298,19 +194,6 @@ public class ManagerValidationData {
         }
     }
 
-    /**
-     * Валидирует и возвращает X координату для {@link Location}.
-     * <p>
-     * Запрашивает ввод и проверяет следующие условия:
-     * <ul>
-     *   <li>Значение не может быть пустым</li>
-     *   <li>Должно быть числом (может быть int или float)</li>
-     * </ul>
-     * Метод поддерживает ввод как целых чисел, так и чисел с плавающей точкой.
-     * В случае ошибки ввода выводится сообщение и ввод повторяется.
-     *
-     * @return валидное значение X координаты локации
-     */
     public float validateSetLocationX() {
         managerInputOutput.writeLineIO("Введите X для Location : ");
 
@@ -339,18 +222,6 @@ public class ManagerValidationData {
         }
     }
 
-    /**
-     * Валидирует и возвращает Y координату для {@link Location}.
-     * <p>
-     * Запрашивает ввод и проверяет следующие условия:
-     * <ul>
-     *   <li>Значение не может быть пустым</li>
-     *   <li>Должно быть числом с плавающей точкой (может быть преобразовано в Double)</li>
-     * </ul>
-     * В случае ошибки ввода выводится сообщение и ввод повторяется.
-     *
-     * @return валидное значение Y координаты локации (не может быть null)
-     */
     public Double validateSetLocationY() {
         managerInputOutput.writeLineIO("Введите Y для Location : ");
 
@@ -373,18 +244,6 @@ public class ManagerValidationData {
         }
     }
 
-    /**
-     * Валидирует и возвращает Z координату для {@link Location}.
-     * <p>
-     * Запрашивает ввод и проверяет следующие условия:
-     * <ul>
-     *   <li>Значение не может быть пустым</li>
-     *   <li>Должно быть целым числом типа int</li>
-     * </ul>
-     * В случае ошибки ввода выводится сообщение и ввод повторяется.
-     *
-     * @return валидное значение Z координаты локации
-     */
     public Integer validateSetLocationZ() {
         managerInputOutput.writeLineIO("Введите Z для Location : ");
 
@@ -407,19 +266,6 @@ public class ManagerValidationData {
         }
     }
 
-    /**
-     * Валидирует и возвращает значение расстояния (distance).
-     * <p>
-     * Запрашивает ввод и проверяет следующие условия:
-     * <ul>
-     *   <li>Ввод должен быть целым числом (проверяется через {@link ManagerInputOutput#hasNextIntIO()})</li>
-     *   <li>Значение должно быть больше 1</li>
-     * </ul>
-     * В режиме скрипта используется специальная логика чтения через {@link ManagerInputOutput#nextIntIO()}.
-     * При несоответствии условиям выводится сообщение и ввод повторяется.
-     *
-     * @return валидное значение расстояния (больше 1)
-     */
     private int validateSetDistance() {
         managerInputOutput.writeLineIO("Введите distance : ");
 

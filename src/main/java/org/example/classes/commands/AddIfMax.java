@@ -9,31 +9,7 @@ import java.util.PriorityQueue;
 
 import static org.example.classes.runner.Runner.*;
 
-/**
- * Команда {@code add_if_max} добавляет новый элемент в коллекцию,
- * если его значение превышает значение наибольшего элемента в коллекции.
- * <p>
- * Сравнение элементов происходит на основе их естественного порядка,
- * определенного в методе {@link Route#compareTo(Route)}.
- * </p>
- *
- * @author
- * @version 1.0
- * @see Command
- * @see Route#compareTo(Route)
- */
 public class AddIfMax implements Command {
-
-    /**
-     * Выполняет команду добавления элемента, если он максимальный.
-     * <p>
-     * Валидирует и создает новый объект {@code Route}. Если коллекция не пуста,
-     * находит максимальный элемент и сравнивает с ним новый. Если новый элемент больше,
-     * он добавляется в коллекцию.
-     * </p>
-     *
-     * @param args аргументы команды (ожидается отсутствие аргументов или аргумент "Route")
-     */
     public void executeCommand(String[] args) {
         if (checkArg(args)) {
             Route newRoute;
@@ -71,12 +47,6 @@ public class AddIfMax implements Command {
         }
     }
 
-    /**
-     * Проверяет аргументы команды.
-     *
-     * @param args массив аргументов для проверки
-     * @return {@code true}, если аргументы корректны (пусто или "Route"), иначе {@code false}
-     */
     public boolean checkArg(String[] args) {
         if (args.length == 0) {
             return true;
@@ -87,11 +57,6 @@ public class AddIfMax implements Command {
         return false;
     }
 
-    /**
-     * Возвращает строковое представление команды для справки.
-     *
-     * @return описание команды
-     */
     @Override
     public String toString() {
         return "add_if_max {element} - добавляет новый элемент в коллекцию, " +

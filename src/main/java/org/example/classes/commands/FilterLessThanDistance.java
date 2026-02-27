@@ -9,26 +9,8 @@ import java.util.PriorityQueue;
 import static org.example.classes.runner.Runner.managerCollections;
 import static org.example.classes.runner.Runner.managerInputOutput;
 
-/**
- * Команда {@code filter_less_than_distance} выводит элементы,
- * значение поля {@code distance} которых меньше заданного.
- *
- * @author
- * @version 1.0
- * @see Command
- * @see Route#getDistance()
- */
 public class FilterLessThanDistance implements Command {
 
-    /**
-     * Выполняет команду фильтрации по расстоянию.
-     * <p>
-     * Принимает целое число (distance) в качестве аргумента.
-     * Проходит по коллекции и выводит все элементы, у которых {@code distance < заданного}.
-     * </p>
-     *
-     * @param args аргументы команды, где args[0] — значение для сравнения
-     */
     public void executeCommand(String[] args) {
         if (checkArg(args)) {
             Integer distance = Integer.parseInt(args[0]);
@@ -47,15 +29,6 @@ public class FilterLessThanDistance implements Command {
         }
     }
 
-    /**
-     * Проверяет аргументы команды.
-     * <p>
-     * Убеждается, что передан ровно один аргумент, и его можно корректно преобразовать в целое число.
-     * </p>
-     *
-     * @param args массив аргументов для проверки
-     * @return {@code true}, если аргумент корректен, иначе {@code false}
-     */
     public boolean checkArg(String[] args) {
         if (args.length == 1) {
             try {
@@ -71,11 +44,6 @@ public class FilterLessThanDistance implements Command {
         return false;
     }
 
-    /**
-     * Возвращает строковое представление команды для справки.
-     *
-     * @return описание команды
-     */
     @Override
     public String toString() {
         return "filter_less_than_distance distance - выводит элементы значения поля distance которых меньше заданного";
