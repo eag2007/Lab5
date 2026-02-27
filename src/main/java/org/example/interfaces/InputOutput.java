@@ -1,5 +1,17 @@
 package org.example.interfaces;
 
+import org.example.enums.Colors;
+import java.io.BufferedReader;
+
 public interface InputOutput {
-    public String readlLineIO();
+    String readLineIO();
+    void writeLineIO(String message);
+    void writeLineIO(String message, Colors color);
+    boolean hasNextIntIO();
+    int nextIntIO();
+    void closeIO();
+    boolean isScriptMode();
+    boolean isCurrentReader(BufferedReader reader);
+    void pushFileExecute(BufferedReader reader);
+    void popFileExecute();
 }
