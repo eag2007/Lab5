@@ -14,29 +14,13 @@ import java.util.PriorityQueue;
 import static org.example.classes.runner.Runner.managerCollections;
 import static org.example.classes.runner.Runner.managerInputOutput;
 
-/**
- * Менеджер для чтения и записи коллекции в CSV-файлы.
- * <p>
- * Обеспечивает импорт коллекции из файла при запуске и экспорт при выполнении команды {@code save}.
- * </p>
- *
- * @author
- * @version 1.0
- * @see ReadWrite
- */
+
 public class ManagerReadWrite implements ReadWrite {
-    /** Единственный экземпляр класса (Singleton). */
     private static ManagerReadWrite managerReadWrite;
 
-    /** Приватный конструктор для Singleton. */
     private ManagerReadWrite() {
     }
 
-    /**
-     * Возвращает единственный экземпляр менеджера.
-     *
-     * @return экземпляр {@code ManagerReadWrite}
-     */
     public static ManagerReadWrite getInstance() {
         if (managerReadWrite == null) {
             managerReadWrite = new ManagerReadWrite();
@@ -44,15 +28,6 @@ public class ManagerReadWrite implements ReadWrite {
         return managerReadWrite;
     }
 
-    /**
-     * Читает данные из CSV-файла.
-     * <p>
-     * Файл должен быть в кодировке UTF-8. Первая строка считается заголовком и пропускается.
-     * </p>
-     *
-     * @param pathToFile путь к файлу
-     * @return список строк, где каждая строка — массив полей, разделенных ';'
-     */
     public List<String[]> readCSV(String pathToFile) {
         if (pathToFile == null) {
             return new ArrayList<>();
@@ -76,15 +51,6 @@ public class ManagerReadWrite implements ReadWrite {
         return data;
     }
 
-    /**
-     * Записывает текущую коллекцию в CSV-файл.
-     * <p>
-     * Запись производится в кодировке UTF-8. Если файл существует, он будет перезаписан.
-     * </p>
-     *
-     * @param pathToFile путь к файлу для сохранения
-     * @return {@code true}, если запись прошла успешно, иначе {@code false}
-     */
     public boolean writeCSV(String pathToFile) {
         PriorityQueue<Route> routes = managerCollections.getCollectionsRoute();
 
