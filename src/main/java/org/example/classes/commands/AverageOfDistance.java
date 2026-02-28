@@ -21,8 +21,10 @@ public class AverageOfDistance implements Command {
             int sizeCollections = managerCollections.getSizeCollections();
             if (sizeCollections != 0) {
                 distance = distance / managerCollections.getSizeCollections();
+                managerInputOutput.writeLineIO("Среднее значение distance всех элементов : " + distance + "\n");
+            } else {
+                managerInputOutput.writeLineIO("Элементов в коллекции нет\n", Colors.RED);
             }
-            managerInputOutput.writeLineIO("Среднее значение distance всех элементов : " + distance + "\n");
         } else {
             managerInputOutput.writeLineIO("Неправильное количество аргументов\n", Colors.RED);
         }

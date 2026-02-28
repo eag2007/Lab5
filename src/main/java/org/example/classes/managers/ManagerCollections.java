@@ -3,6 +3,7 @@ package org.example.classes.managers;
 import org.example.classes.Coordinates;
 import org.example.classes.Location;
 import org.example.classes.Route;
+import org.example.enums.Colors;
 import org.example.interfaces.Command;
 
 import java.time.ZonedDateTime;
@@ -11,8 +12,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.PriorityQueue;
 
-import static org.example.classes.runner.Runner.managerInputOutput;
-import static org.example.classes.runner.Runner.managerValidationData;
+import static org.example.classes.runner.Runner.*;
 
 
 public class ManagerCollections {
@@ -37,7 +37,13 @@ public class ManagerCollections {
     }
 
     public void removeByIdCollections(Long id) {
-        this.collectionsRoute.removeIf(route -> ((Long) route.getId()).equals(id));
+        boolean flag = this.collectionsRoute.removeIf(route -> ((Long) route.getId()).equals(id));
+
+        if (flag) {
+            managerInputOutput.writeLineIO("Объект удалён\n", Colors.GREEN);
+        } else {
+            managerInputOutput.writeLineIO("Объект не найден\n", Colors.RED);
+        }
     }
 
     public void removeFirstCollections() {
@@ -55,8 +61,35 @@ public class ManagerCollections {
     }
 
     public void updateCollections(Long id) {
-        removeByIdCollections(id);
-        this.collectionsRoute.add(managerValidationData.validateFromInput(id));
+        boolean flag = false;
+        ZonedDateTime time = null;
+        Route now = null;
+        for (Route route : this.collectionsRoute) {
+            if (route.getId() == id) {
+                time = route.getCreationDate();
+                flag = true;
+                now = route;
+            }
+        }
+        if (!flag) {
+            managerInputOutput.writeLineIO("Элемент не найден\n", Colors.RED);
+        } else {
+            removeByIdCollections(id);
+            managerInputOutput.writeLineIO("Прошлый элемент\n", Colors.YELLOW);
+            managerInputOutput.writeLineIO("Прошлое поле name: " + now.getName() + "\n");
+            managerInputOutput.writeLineIO("Прошлое поле Coordinates X: " + now.getCoordinates().getX() + "\n");
+            managerInputOutput.writeLineIO("Прошлое поле Coordinates Y: " + now.getCoordinates().getY() + "\n");
+            managerInputOutput.writeLineIO("Прошлое поле LocationFrom X: " + now.getFrom().getX() + "\n");
+            managerInputOutput.writeLineIO("Прошлое поле LocationFrom Y: " + now.getFrom().getY() + "\n");
+            managerInputOutput.writeLineIO("Прошлое поле LocationFrom Z: " + now.getTo().getZ() + "\n");
+            managerInputOutput.writeLineIO("Прошлое поле LocationTo X: " + now.getTo().getX() + "\n");
+            managerInputOutput.writeLineIO("Прошлое поле LocationTo Y: " + now.getTo().getY() + "\n");
+            managerInputOutput.writeLineIO("Прошлое поле LocationTo Z: " + now.getTo().getZ() + "\n");
+            managerInputOutput.writeLineIO("Прошлое поле distance: " + now.getDistance() + "\n");
+
+            this.collectionsRoute.add(managerValidationData.validateFromInput(id, time));
+            managerInputOutput.writeLineIO("Элемент обновлён\n", Colors.GREEN);
+        }
     }
 
     public int getSizeCollections() {

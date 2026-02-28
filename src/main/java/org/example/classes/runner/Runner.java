@@ -41,6 +41,7 @@ public class Runner {
             }
         } catch (NoSuchElementException e) {
             managerInputOutput.writeLineIO("Завершение ввода\n", Colors.GREEN);
+            managerInputOutput.closeIO();
         }
     }
 }

@@ -22,10 +22,11 @@ public class RemoveById implements Command {
                 return true;
             } catch (NumberFormatException e) {
                 managerInputOutput.writeLineIO("Ошибка: аргумент должен быть целым числом в диапазоне от " +
-                        Long.MIN_VALUE + " до " + Long.MAX_VALUE + "\n", Colors.RED);
+                        Integer.MIN_VALUE + " до " + Integer.MAX_VALUE + "\n", Colors.RED);
                 return false;
             }
         }
+        managerInputOutput.writeLineIO("Неправильное количество аргументов\n", Colors.RED);
         return false;
     }
 

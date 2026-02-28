@@ -25,6 +25,7 @@ public class ManagerValidationData {
                 return false;
             }
 
+
             String name = fields[1].trim();
             if (name.isEmpty()) {
                 managerInputOutput.writeLineIO("Строка " + lineNumber + ": name не пустой\n", Colors.RED);
@@ -85,9 +86,9 @@ public class ManagerValidationData {
         if (coordinatesX == null) return null;
         try {
             coordx = Long.parseLong(coordinatesX.trim());
-            if (coordx <= 0 || coordx > 108) throw new NumberFormatException();
+            if (coordx > 108) throw new NumberFormatException();
         } catch (NumberFormatException e) {
-            managerInputOutput.writeLineIO("Ошибка: X coordinates должно быть числом от 1 до 108\n");
+            managerInputOutput.writeLineIO("Ошибка: X coordinates должно быть от -922372036854775808 и не больше 108 и быть целым\n");
             return null;
         }
 
@@ -95,19 +96,21 @@ public class ManagerValidationData {
         if (coordinatesY == null) return null;
         try {
             coordy = Long.parseLong(coordinatesY.trim());
-            if (coordy <= 0 || coordy > 108) throw new NumberFormatException();
+            if (coordy > 108) throw new NumberFormatException();
         } catch (NumberFormatException e) {
-            managerInputOutput.writeLineIO("Ошибка: Y coordinates должно быть числом от 1 до 108\n");
+            managerInputOutput.writeLineIO("Ошибка: Y coordinates должно быть от -922372036854775808 и не больше 108 и быть целым\n");
             return null;
         }
 
-        float locaXFrom; Double locaYFrom; int locaZFrom;
+        float locaXFrom;
+        Double locaYFrom;
+        int locaZFrom;
         String locationFromX = managerInputOutput.readLineIO();
         if (locationFromX == null) return null;
         try {
             locaXFrom = Float.parseFloat(locationFromX.trim().replace(',', '.'));
         } catch (NumberFormatException e) {
-            managerInputOutput.writeLineIO("Ошибка: X location from должно быть числом\n");
+            managerInputOutput.writeLineIO("Ошибка: X location from должно быть числом от " + Float.MIN_VALUE + " до " + Float.MAX_VALUE + "\n");
             return null;
         }
 
@@ -116,7 +119,7 @@ public class ManagerValidationData {
         try {
             locaYFrom = Double.parseDouble(locationFromY.trim().replace(',', '.'));
         } catch (NumberFormatException e) {
-            managerInputOutput.writeLineIO("Ошибка: Y location from должно быть числом\n");
+            managerInputOutput.writeLineIO("Ошибка: Y location from должно быть числом от " + Double.MIN_VALUE + " до " + Double.MAX_VALUE + "\n");
             return null;
         }
 
@@ -125,17 +128,19 @@ public class ManagerValidationData {
         try {
             locaZFrom = Integer.parseInt(locationFromZ.trim().replace(',', '.'));
         } catch (NumberFormatException e) {
-            managerInputOutput.writeLineIO("Ошибка: Z location from должно быть целым числом\n");
+            managerInputOutput.writeLineIO("Ошибка: Z location from должно быть целым числом от " + Integer.MIN_VALUE + " до " + Integer.MAX_VALUE + "\n");
             return null;
         }
 
-        float locaXTo; Double locaYTo; int locaZTo;
+        float locaXTo;
+        Double locaYTo;
+        int locaZTo;
         String locationToX = managerInputOutput.readLineIO();
         if (locationToX == null) return null;
         try {
             locaXTo = Float.parseFloat(locationToX.trim().replace(',', '.'));
         } catch (NumberFormatException e) {
-            managerInputOutput.writeLineIO("Ошибка: X location to должно быть числом\n");
+            managerInputOutput.writeLineIO("Ошибка: X location to должно быть числом от " + Float.MIN_VALUE + " до " + Float.MAX_VALUE + "\n");
             return null;
         }
 
@@ -144,7 +149,7 @@ public class ManagerValidationData {
         try {
             locaYTo = Double.parseDouble(locationToY.trim().replace(',', '.'));
         } catch (NumberFormatException e) {
-            managerInputOutput.writeLineIO("Ошибка: Y location to должно быть числом\n");
+            managerInputOutput.writeLineIO("Ошибка: Y location to должно быть числом от " + Double.MIN_VALUE + " до " + Double.MAX_VALUE + "\n");
             return null;
         }
 
@@ -153,7 +158,7 @@ public class ManagerValidationData {
         try {
             locaZTo = Integer.parseInt(locationToZ.trim().replace(',', '.'));
         } catch (NumberFormatException e) {
-            managerInputOutput.writeLineIO("Ошибка: Z location to должно быть целым числом\n");
+            managerInputOutput.writeLineIO("Ошибка: Z location to должно быть целым числом от " + Integer.MIN_VALUE + " до " + Integer.MAX_VALUE + "\n");
             return null;
         }
 
@@ -164,7 +169,7 @@ public class ManagerValidationData {
             dist = Integer.parseInt(distance.trim());
             if (dist <= 1) throw new NumberFormatException();
         } catch (NumberFormatException e) {
-            managerInputOutput.writeLineIO("Ошибка: distance должно быть целым числом больше 1\n");
+            managerInputOutput.writeLineIO("Ошибка: distance должно быть целым числом больше 1 и меньше " + Integer.MAX_VALUE + "\n");
             return null;
         }
 
@@ -178,17 +183,26 @@ public class ManagerValidationData {
     public Route validateFromInput() {
         String name = validateSetName();
         Coordinates coordinates = new Coordinates(validateSetCoordinatesX(), validateSetCoordinatesY());
-        Location locationFrom = new Location(validateSetLocationX(), validateSetLocationY(), validateSetLocationZ());
-        Location locationTo = new Location(validateSetLocationX(), validateSetLocationY(), validateSetLocationZ());
+        Location locationFrom = new Location(validateSetLocationX("From"), validateSetLocationY("From"), validateSetLocationZ("From"));
+        Location locationTo = new Location(validateSetLocationX("To"), validateSetLocationY("To"), validateSetLocationZ("To"));
         int distance = validateSetDistance();
         return new Route(name, coordinates, locationFrom, locationTo, distance);
+    }
+
+    public Route validateFromInput(long id, ZonedDateTime time) {
+        String name = validateSetName();
+        Coordinates coordinates = new Coordinates(validateSetCoordinatesX(), validateSetCoordinatesY());
+        Location locationFrom = new Location(validateSetLocationX("From"), validateSetLocationY("From"), validateSetLocationZ("From"));
+        Location locationTo = new Location(validateSetLocationX("To"), validateSetLocationY("To"), validateSetLocationZ("To"));
+        int distance = validateSetDistance();
+        return new Route(id, name, coordinates, time, locationFrom, locationTo, distance);
     }
 
     public Route validateFromInput(long id) {
         String name = validateSetName();
         Coordinates coordinates = new Coordinates(validateSetCoordinatesX(), validateSetCoordinatesY());
-        Location locationFrom = new Location(validateSetLocationX(), validateSetLocationY(), validateSetLocationZ());
-        Location locationTo = new Location(validateSetLocationX(), validateSetLocationY(), validateSetLocationZ());
+        Location locationFrom = new Location(validateSetLocationX("From"), validateSetLocationY("From"), validateSetLocationZ("From"));
+        Location locationTo = new Location(validateSetLocationX("To"), validateSetLocationY("To"), validateSetLocationZ("To"));
         int distance = validateSetDistance();
         return new Route(id, name, coordinates, locationFrom, locationTo, distance);
     }
@@ -215,10 +229,10 @@ public class ManagerValidationData {
             }
             try {
                 long x = Long.parseLong(input);
-                if (0 < x && x <= 108) return x;
-                else managerInputOutput.writeLineIO("X от 1 до 108\n");
+                if (x <= 108) return x;
+                else managerInputOutput.writeLineIO("X до 108\n");
             } catch (NumberFormatException e) {
-                managerInputOutput.writeLineIO("X должно быть long\n");
+                managerInputOutput.writeLineIO("Ошибка: X coordinates должно быть от -922372036854775808 и не больше 108 и быть целым\n");
             }
             managerInputOutput.writeLineIO("Введите X для Coordinates : ");
         }
@@ -235,65 +249,64 @@ public class ManagerValidationData {
             }
             try {
                 long y = Long.parseLong(input);
-                if (0 < y && y <= 20) return y;
-                else managerInputOutput.writeLineIO("Y от 1 до 20\n");
+                if (y <= 20) return y;
             } catch (NumberFormatException e) {
-                managerInputOutput.writeLineIO("Y должно быть long\n");
+                managerInputOutput.writeLineIO("Ошибка: Y coordinates должно быть больше 20 и быть целым\n");
             }
             managerInputOutput.writeLineIO("Введите Y для Coordinates : ");
         }
     }
 
-    public float validateSetLocationX() {
-        managerInputOutput.writeLineIO("Введите X для Location : ");
+    public float validateSetLocationX(String a) {
+        managerInputOutput.writeLineIO("Введите X для Location" + a + ": ");
         while (true) {
             String input = managerInputOutput.readLineIO().trim();
             if (input.isEmpty()) {
                 managerInputOutput.writeLineIO("X не может быть пустым\n");
-                managerInputOutput.writeLineIO("Введите X для Location : ");
+                managerInputOutput.writeLineIO("Введите X для Location" + a + " : ");
                 continue;
             }
             try {
                 return Float.parseFloat(input);
             } catch (NumberFormatException e) {
-                managerInputOutput.writeLineIO("X должно быть числом\n");
-                managerInputOutput.writeLineIO("Введите X для Location : ");
+                managerInputOutput.writeLineIO("X должно быть числом в диапазоне от " + Float.MIN_VALUE + " до " + Float.MAX_VALUE + "\n");
+                managerInputOutput.writeLineIO("Введите X для Location" + a + " : ");
             }
         }
     }
 
-    public Double validateSetLocationY() {
-        managerInputOutput.writeLineIO("Введите Y для Location : ");
+    public Double validateSetLocationY(String a) {
+        managerInputOutput.writeLineIO("Введите Y для Location" + a + ": ");
         while (true) {
             String input = managerInputOutput.readLineIO().trim();
             if (input.isEmpty()) {
                 managerInputOutput.writeLineIO("Y не может быть пустым\n");
-                managerInputOutput.writeLineIO("Введите Y для Location : ");
+                managerInputOutput.writeLineIO("Введите Y для Location" + a + " : ");
                 continue;
             }
             try {
                 return Double.parseDouble(input);
             } catch (NumberFormatException e) {
-                managerInputOutput.writeLineIO("Y должно быть числом\n");
-                managerInputOutput.writeLineIO("Введите Y для Location : ");
+                managerInputOutput.writeLineIO("Y должно быть числом в диапазоне от " + Double.MIN_VALUE + " до " + Double.MAX_VALUE + "\n");
+                managerInputOutput.writeLineIO("Введите Y для Location" + a + " : ");
             }
         }
     }
 
-    public Integer validateSetLocationZ() {
-        managerInputOutput.writeLineIO("Введите Z для Location : ");
+    public Integer validateSetLocationZ(String a) {
+        managerInputOutput.writeLineIO("Введите Z для Location" + a + ": ");
         while (true) {
             String input = managerInputOutput.readLineIO().trim();
             if (input.isEmpty()) {
                 managerInputOutput.writeLineIO("Z не может быть пустым\n");
-                managerInputOutput.writeLineIO("Введите Z для Location : ");
+                managerInputOutput.writeLineIO("Введите Z для Location" + a + " : ");
                 continue;
             }
             try {
                 return Integer.parseInt(input);
             } catch (NumberFormatException e) {
-                managerInputOutput.writeLineIO("Z должно быть целым числом\n");
-                managerInputOutput.writeLineIO("Введите Z для Location : ");
+                managerInputOutput.writeLineIO("Z должно быть целым числом в диапазоне от " + Integer.MIN_VALUE + " до " + Integer.MAX_VALUE + "\n");
+                managerInputOutput.writeLineIO("Введите Z для Location" + a + " : ");
             }
         }
     }
@@ -308,7 +321,7 @@ public class ManagerValidationData {
                 else managerInputOutput.writeLineIO("DISTANCE должно быть больше 1\n");
             } else {
                 managerInputOutput.readLineIO();
-                managerInputOutput.writeLineIO("DISTANCE должно быть Integer\n");
+                managerInputOutput.writeLineIO("DISTANCE должно быть целым и в диапазоне от 2" + " до " + Integer.MAX_VALUE + "\n");
             }
             managerInputOutput.writeLineIO("Введите distance : ");
         }
