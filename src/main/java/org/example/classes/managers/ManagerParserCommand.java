@@ -53,6 +53,14 @@ public class ManagerParserCommand {
         return false;
     }
 
+    public List<String> getCommandNames() {
+        List<String> names = new ArrayList<>();
+        for (String key : this.commands.keySet()) {
+            names.add(key);
+        }
+        return names;
+    }
+
     public List<Command> getCommands() {
         List<Command> commandsList = new ArrayList<>();
         commandsList.addAll(this.commands.values());

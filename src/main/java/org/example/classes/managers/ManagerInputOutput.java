@@ -2,21 +2,36 @@ package org.example.classes.managers;
 
 import org.example.enums.Colors;
 import org.example.interfaces.InputOutput;
+import org.jline.reader.*;
+import org.jline.reader.impl.completer.StringsCompleter;
+import org.jline.terminal.Terminal;
+import org.jline.terminal.TerminalBuilder;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.Scanner;
+import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Stack;
 
 public class ManagerInputOutput implements InputOutput {
     private static ManagerInputOutput managerInputOutput;
-    private Scanner in;
+    private static LineReader lineReader;
+    private static Terminal terminal;
     private Stack<BufferedReader> readerStack;
     private boolean executeScript = false;
 
     private ManagerInputOutput() {
-        this.in = new Scanner(System.in);
         this.readerStack = new Stack<>();
+        try {
+            terminal = TerminalBuilder.builder()
+                    .system(true)
+                    .build();
+            lineReader = LineReaderBuilder.builder()
+                    .terminal(terminal)
+                    .build();
+        } catch (IOException e) {
+            throw new RuntimeException("Не удалось инициализировать терминал: " + e.getMessage());
+        }
     }
 
     public static ManagerInputOutput getInstance() {
@@ -24,6 +39,18 @@ public class ManagerInputOutput implements InputOutput {
             managerInputOutput = new ManagerInputOutput();
         }
         return managerInputOutput;
+    }
+
+    public void setCommands(List<String> commandNames) {
+        try {
+            Completer completer = new StringsCompleter(commandNames);
+            lineReader = LineReaderBuilder.builder()
+                    .terminal(terminal)
+                    .completer(completer)
+                    .build();
+        } catch (Exception e) {
+            System.out.println("Ошибка при установке автодополнения: " + e.getMessage());
+        }
     }
 
     public void pushFileExecute(BufferedReader reader) {
@@ -57,7 +84,7 @@ public class ManagerInputOutput implements InputOutput {
         return !readerStack.isEmpty() && readerStack.peek() == reader;
     }
 
-    public String readLineIO() {
+    public String readLineIO(String prompt) {
         while (!readerStack.isEmpty()) {
             BufferedReader currentReader = readerStack.peek();
             try {
@@ -74,7 +101,17 @@ public class ManagerInputOutput implements InputOutput {
                 return null;
             }
         }
-        return this.in.nextLine();
+        try {
+            return lineReader.readLine(prompt);  // prompt передаётся сюда
+        } catch (UserInterruptException e) {
+            return "";
+        } catch (EndOfFileException e) {
+            throw new NoSuchElementException("EOF");
+        }
+    }
+
+    public String readLineIO() {
+        return readLineIO("");
     }
 
     public void writeLineIO(String message) {
@@ -86,23 +123,18 @@ public class ManagerInputOutput implements InputOutput {
     }
 
     public boolean hasNextIntIO() {
-        if (isScriptMode()) return true;
-        return this.in.hasNextInt();
+        return true;
     }
 
     public int nextIntIO() {
-        if (isScriptMode()) {
-            String line = readLineIO();
-            if (line != null) {
-                return Integer.parseInt(line.trim());
-            }
+        String line = readLineIO();
+        if (line != null) {
+            return Integer.parseInt(line.trim());
         }
-        return this.in.nextInt();
+        return 0;
     }
 
     public void closeIO() {
-        this.in.close();
-
         while (!readerStack.isEmpty()) {
             try {
                 BufferedReader reader = readerStack.pop();
@@ -113,7 +145,13 @@ public class ManagerInputOutput implements InputOutput {
                 System.out.println("Ошибка при закрытии ридера: " + e.getMessage());
             }
         }
-
+        try {
+            if (terminal != null) {
+                terminal.close();
+            }
+        } catch (IOException e) {
+            System.out.println("Ошибка при закрытии терминала: " + e.getMessage());
+        }
         writeLineIO("IO закрыт\n");
     }
 }

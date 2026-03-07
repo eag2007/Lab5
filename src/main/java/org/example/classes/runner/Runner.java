@@ -19,6 +19,10 @@ public class Runner {
         managerCollections = new ManagerCollections();
         managerValidationData = new ManagerValidationData();
 
+        // ПЕРЕДАЧА СПИСКА КОМАНД ДЛЯ АВТОДОПЛНЕНИЯ
+        List<String> commandNames = managerParserCommand.getCommandNames();
+        managerInputOutput.setCommands(commandNames);
+
         managerInputOutput.writeLineIO("=====================================\n");
 
         List<String[]> data = managerReadWrite.readCSV(javaMetaspace);
@@ -31,8 +35,11 @@ public class Runner {
     public void run() {
         try {
             while (true) {
-                managerInputOutput.writeLineIO("Введите команду : ", Colors.BLUE);
-                String command = managerInputOutput.readLineIO();
+                String command = managerInputOutput.readLineIO("\u001B[34mВведите команду : \u001B[0m");
+
+                if (command == null || command.isBlank()) {
+                    continue;
+                }
 
                 boolean flag = managerParserCommand.parserCommand(command);
                 if (!flag) {
@@ -42,6 +49,8 @@ public class Runner {
         } catch (NoSuchElementException e) {
             managerInputOutput.writeLineIO("Завершение ввода\n", Colors.GREEN);
             managerInputOutput.closeIO();
+        } catch (RuntimeException e) {
+            managerInputOutput.writeLineIO("Что-то пошло не так...\n", Colors.YELLOW);
         }
     }
 }
