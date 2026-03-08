@@ -1,0 +1,107 @@
+package org.example.classes;
+
+import org.example.classes.managers.ManagerGenerateId;
+
+import java.math.BigDecimal;
+import java.time.ZonedDateTime;
+import java.util.Comparator;
+
+public class Route implements Comparable<Route> {
+    private long id;
+    private String name;
+    private Coordinates coordinates;
+    private java.time.ZonedDateTime creationDate;
+    private Location from;
+    private Location to;
+    private Integer distance;
+    private BigDecimal price;
+
+    @Override
+    public int compareTo(Route o) {
+        int idCompare = Long.compare(this.id, o.id);
+        if (idCompare != 0) {
+            return idCompare;
+        }
+
+        int nameCompare = this.name.compareTo(o.name);
+        if (nameCompare != 0) {
+            return nameCompare;
+        }
+
+        int coordCompare = this.coordinates.compareTo(o.coordinates);
+        if (coordCompare != 0) {
+            return coordCompare;
+        }
+
+        int dateCompare = this.creationDate.compareTo(o.creationDate);
+        if (dateCompare != 0) {
+            return dateCompare;
+        }
+
+        if (this.from == null) {
+            return -1;
+        }
+
+        if (o.from == null) {
+            return 1;
+        }
+
+        int locFromCompare = this.from.compareTo(o.from);
+        if (locFromCompare != 0) {
+            return locFromCompare;
+        }
+
+        int locToCompare = this.to.compareTo(o.to);
+        if (locToCompare != 0) {
+            return locToCompare;
+        }
+
+        if (this.distance == null) {
+            return -1;
+        }
+
+        if (o.distance == null) {
+            return 1;
+        }
+
+        return Integer.compare(this.distance, o.distance);
+    }
+
+    public Route(String name, Coordinates coordinates, Location from, Location to, Integer distance) {
+        this.id = ManagerGenerateId.generateId();
+        this.creationDate = ZonedDateTime.now();
+        this.name = name;
+        this.coordinates = coordinates;
+        this.from = from;
+        this.to = to;
+        this.distance = distance;
+    }
+
+    public Route(long id, String name, Coordinates coordinates, Location from, Location to, Integer distance) {
+        this.id = id;
+        this.creationDate = ZonedDateTime.now();
+        this.name = name;
+        this.coordinates = coordinates;
+        this.from = from;
+        this.to = to;
+        this.distance = distance;
+    }
+
+    public Route(long id, String name, Coordinates coordinates, ZonedDateTime creationDate, Location from, Location to, Integer distance) {
+        this.id = id;
+        this.creationDate = creationDate;
+        this.name = name;
+        this.coordinates = coordinates;
+        this.from = from;
+        this.to = to;
+        this.distance = distance;
+    }
+
+    public long getId() { return this.id; }
+    public ZonedDateTime getCreationDate() { return this.creationDate; }
+    public String getName() { return this.name; }
+    public Coordinates getCoordinates() { return this.coordinates; }
+    public Location getFrom() { return this.from; }
+    public Location getTo() { return this.to; }
+    public Integer getDistance() { return this.distance; }
+}
