@@ -6,6 +6,7 @@ import org.example.classes.Route;
 import org.example.enums.Colors;
 import org.example.interfaces.Command;
 
+import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -86,6 +87,7 @@ public class ManagerCollections {
             managerInputOutput.writeLineIO("Прошлое поле LocationTo Y: " + now.getTo().getY() + "\n");
             managerInputOutput.writeLineIO("Прошлое поле LocationTo Z: " + now.getTo().getZ() + "\n");
             managerInputOutput.writeLineIO("Прошлое поле distance: " + now.getDistance() + "\n");
+            managerInputOutput.writeLineIO("Прошлое поле price: " + now.getPrice() + "\n");
 
             this.collectionsRoute.add(managerValidationData.validateFromInput(id, time));
             managerInputOutput.writeLineIO("Элемент обновлён\n", Colors.GREEN);
@@ -130,7 +132,9 @@ public class ManagerCollections {
 
                 Integer distance = Integer.parseInt(row[11]);
 
-                Route route = new Route(id, name, coordinates, creationDate, from, to, distance);
+                BigDecimal price = new BigDecimal(row[12].trim().replace(',', '.'));
+
+                Route route = new Route(id, name, coordinates, creationDate, from, to, distance, price);
                 collectionsRoute.add(route);
 
                 if (id > maxId) {
@@ -138,7 +142,8 @@ public class ManagerCollections {
                 }
 
                 ManagerGenerateId.setId(maxId);
-
+            } catch (NumberFormatException e) {
+                managerInputOutput.writeLineIO("Ошибка: неправильный формат\n");
             } catch (Exception e) {
                 managerInputOutput.writeLineIO("Ошибка: " + e.getMessage() + "\n");
             }

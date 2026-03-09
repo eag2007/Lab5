@@ -5,6 +5,7 @@ import org.example.classes.Route;
 import org.example.classes.Coordinates;
 import org.example.classes.Location;
 
+import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeParseException;
 
@@ -13,8 +14,8 @@ import static org.example.classes.runner.Runner.managerInputOutput;
 public class ManagerValidationData {
 
     public boolean validateCSVFields(String[] fields, int lineNumber) {
-        if (fields.length != 12) {
-            managerInputOutput.writeLineIO("Строка " + lineNumber + ": должно быть 12 полей\n", Colors.RED);
+        if (fields.length != 13) {
+            managerInputOutput.writeLineIO("Строка " + lineNumber + ": должно быть 13 полей\n", Colors.RED);
             return false;
         }
 
@@ -65,6 +66,11 @@ public class ManagerValidationData {
                 return false;
             }
 
+            BigDecimal price = new BigDecimal(fields[12].trim().replace(',', '.'));
+            if (price.compareTo(BigDecimal.ZERO) < 0) {
+                managerInputOutput.writeLineIO("Строка " + lineNumber + ": цена не может быть отрицательной\n", Colors.RED);
+                return false;
+            }
             return true;
 
         } catch (NumberFormatException e) {
@@ -177,7 +183,20 @@ public class ManagerValidationData {
         Location from = new Location(locaXFrom, locaYFrom, locaZFrom);
         Location to = new Location(locaXTo, locaYTo, locaZTo);
 
-        return new Route(name, coordinates, from, to, dist);
+        BigDecimal price;
+        String price_string = managerInputOutput.readLineIO();
+        if (price_string == null) return null;
+        try {
+            price = new BigDecimal(price_string.trim().replace(',', '.'));
+            if (price.compareTo(BigDecimal.ZERO) < 0) {
+                throw new NumberFormatException();
+            }
+        } catch (NumberFormatException e) {
+            managerInputOutput.writeLineIO("Ошибка: цена не может быть отрицательной\n");
+            return null;
+        }
+
+        return new Route(name, coordinates, from, to, dist, price);
     }
 
     public Route validateFromInput() {
@@ -186,7 +205,8 @@ public class ManagerValidationData {
         Location locationFrom = new Location(validateSetLocationX("From"), validateSetLocationY("From"), validateSetLocationZ("From"));
         Location locationTo = new Location(validateSetLocationX("To"), validateSetLocationY("To"), validateSetLocationZ("To"));
         int distance = validateSetDistance();
-        return new Route(name, coordinates, locationFrom, locationTo, distance);
+        BigDecimal price = validateSetPrice();
+        return new Route(name, coordinates, locationFrom, locationTo, distance, price);
     }
 
     public Route validateFromInput(long id, ZonedDateTime time) {
@@ -195,7 +215,8 @@ public class ManagerValidationData {
         Location locationFrom = new Location(validateSetLocationX("From"), validateSetLocationY("From"), validateSetLocationZ("From"));
         Location locationTo = new Location(validateSetLocationX("To"), validateSetLocationY("To"), validateSetLocationZ("To"));
         int distance = validateSetDistance();
-        return new Route(id, name, coordinates, time, locationFrom, locationTo, distance);
+        BigDecimal price = validateSetPrice();
+        return new Route(id, name, coordinates, time, locationFrom, locationTo, distance, price);
     }
 
     public Route validateFromInput(long id) {
@@ -204,7 +225,8 @@ public class ManagerValidationData {
         Location locationFrom = new Location(validateSetLocationX("From"), validateSetLocationY("From"), validateSetLocationZ("From"));
         Location locationTo = new Location(validateSetLocationX("To"), validateSetLocationY("To"), validateSetLocationZ("To"));
         int distance = validateSetDistance();
-        return new Route(id, name, coordinates, locationFrom, locationTo, distance);
+        BigDecimal price = validateSetPrice();
+        return new Route(id, name, coordinates, locationFrom, locationTo, distance, price);
     }
 
     public String validateSetName() {
@@ -304,6 +326,20 @@ public class ManagerValidationData {
                 managerInputOutput.writeLineIO("DISTANCE должно быть больше 1\n");
             } catch (NumberFormatException e) {
                 managerInputOutput.writeLineIO("DISTANCE должно быть целым и в диапазоне от 2 до " + Integer.MAX_VALUE + "\n");
+            }
+        }
+    }
+
+    private BigDecimal validateSetPrice() {
+        while (true) {
+            String price_string = managerInputOutput.readLineIO("Введите price : ").trim().replace(',', '.');
+            if (price_string.isEmpty()) continue;
+            try {
+                BigDecimal price = new BigDecimal(price_string);
+                if (price.compareTo(BigDecimal.ZERO) >= 0) return price;
+                managerInputOutput.writeLineIO("Price не может быть отрицательным");
+            } catch (NumberFormatException e) {
+                managerInputOutput.writeLineIO("Ошибка при вводе формата price\n", Colors.RED);
             }
         }
     }

@@ -92,7 +92,7 @@ public class ManagerReadWrite implements ReadWrite {
         try (OutputStreamWriter writer = new OutputStreamWriter(
                 new FileOutputStream(file), StandardCharsets.UTF_8)) {
 
-            writer.write("id;name;coordinates_x;coordinates_y;creation_date;from_x;from_y;from_z;to_x;to_y;to_z;distance\n");
+            writer.write("id;name;coordinates_x;coordinates_y;creation_date;from_x;from_y;from_z;to_x;to_y;to_z;distance;price\n");
 
             for (Route route : routes) {
                 String line = route.getId() + ";" +
@@ -106,7 +106,8 @@ public class ManagerReadWrite implements ReadWrite {
                         route.getTo().getX() + ";" +
                         route.getTo().getY() + ";" +
                         route.getTo().getZ() + ";" +
-                        route.getDistance() + "\n";
+                        route.getDistance() + ";" +
+                        route.getPrice() + "\n";
                 writer.write(line);
             }
 

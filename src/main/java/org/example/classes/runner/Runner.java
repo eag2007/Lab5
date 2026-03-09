@@ -1,5 +1,6 @@
 package org.example.classes.runner;
 
+import org.example.classes.managers.api.ManagerApi;
 import org.example.classes.managers.*;
 import org.example.enums.Colors;
 
@@ -13,6 +14,7 @@ public class Runner {
     public static final ManagerReadWrite managerReadWrite = ManagerReadWrite.getInstance();
     public static ManagerValidationData managerValidationData;
     public static String javaMetaspace = System.getenv("JAVAMETASPACE");
+    public static ManagerApi managerApi = ManagerApi.getInstance();
 
     public Runner() {
         managerParserCommand = new ManagerParserCommand();

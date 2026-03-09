@@ -16,6 +16,74 @@ public class Route implements Comparable<Route> {
     private Integer distance;
     private BigDecimal price;
 
+    public Route(String name, Coordinates coordinates, Location from, Location to,
+                 Integer distance, BigDecimal price) {
+        this.id = ManagerGenerateId.generateId();
+        this.creationDate = ZonedDateTime.now();
+        this.name = name;
+        this.coordinates = coordinates;
+        this.from = from;
+        this.to = to;
+        this.distance = distance;
+        this.price = price;
+    }
+
+    public Route(long id, String name, Coordinates coordinates, Location from, Location to,
+                 Integer distance, BigDecimal price) {
+        this.id = id;
+        this.creationDate = ZonedDateTime.now();
+        this.name = name;
+        this.coordinates = coordinates;
+        this.from = from;
+        this.to = to;
+        this.distance = distance;
+        this.price = price;
+    }
+
+    public Route(long id, String name, Coordinates coordinates, ZonedDateTime creationDate, Location from, Location to,
+                 Integer distance, BigDecimal price) {
+        this.id = id;
+        this.creationDate = creationDate;
+        this.name = name;
+        this.coordinates = coordinates;
+        this.from = from;
+        this.to = to;
+        this.distance = distance;
+        this.price = price;
+    }
+
+    public long getId() {
+        return this.id;
+    }
+
+    public ZonedDateTime getCreationDate() {
+        return this.creationDate;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public Coordinates getCoordinates() {
+        return this.coordinates;
+    }
+
+    public Location getFrom() {
+        return this.from;
+    }
+
+    public Location getTo() {
+        return this.to;
+    }
+
+    public Integer getDistance() {
+        return this.distance;
+    }
+
+    public BigDecimal getPrice() {
+        return this.price;
+    }
+
     @Override
     public int compareTo(Route o) {
         int idCompare = Long.compare(this.id, o.id);
@@ -66,42 +134,4 @@ public class Route implements Comparable<Route> {
 
         return Integer.compare(this.distance, o.distance);
     }
-
-    public Route(String name, Coordinates coordinates, Location from, Location to, Integer distance) {
-        this.id = ManagerGenerateId.generateId();
-        this.creationDate = ZonedDateTime.now();
-        this.name = name;
-        this.coordinates = coordinates;
-        this.from = from;
-        this.to = to;
-        this.distance = distance;
-    }
-
-    public Route(long id, String name, Coordinates coordinates, Location from, Location to, Integer distance) {
-        this.id = id;
-        this.creationDate = ZonedDateTime.now();
-        this.name = name;
-        this.coordinates = coordinates;
-        this.from = from;
-        this.to = to;
-        this.distance = distance;
-    }
-
-    public Route(long id, String name, Coordinates coordinates, ZonedDateTime creationDate, Location from, Location to, Integer distance) {
-        this.id = id;
-        this.creationDate = creationDate;
-        this.name = name;
-        this.coordinates = coordinates;
-        this.from = from;
-        this.to = to;
-        this.distance = distance;
-    }
-
-    public long getId() { return this.id; }
-    public ZonedDateTime getCreationDate() { return this.creationDate; }
-    public String getName() { return this.name; }
-    public Coordinates getCoordinates() { return this.coordinates; }
-    public Location getFrom() { return this.from; }
-    public Location getTo() { return this.to; }
-    public Integer getDistance() { return this.distance; }
 }
