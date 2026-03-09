@@ -53,6 +53,6 @@ public class TestWithNotRedis implements Command {
 
     @Override
     public String toString() {
-        return "show - выводит в стандартный поток вывода все элементы коллекции в строковом представлении";
+        return "test2 - тестит без redis";
     }
 }
