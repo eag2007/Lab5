@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeParseException;
 
+import static org.example.classes.runner.Runner.managerApi;
 import static org.example.classes.runner.Runner.managerInputOutput;
 
 public class ManagerValidationData {
@@ -319,7 +320,10 @@ public class ManagerValidationData {
     private int validateSetDistance() {
         while (true) {
             String input = managerInputOutput.readLineIO("Введите distance : ").trim();
-            if (input.isEmpty()) continue;
+            if (input.isEmpty()) {
+                managerInputOutput.writeLineIO("DISTANCE не может быть пустым\n");
+                continue;
+            }
             try {
                 int distance = Integer.parseInt(input);
                 if (distance > 1) return distance;
@@ -333,11 +337,14 @@ public class ManagerValidationData {
     private BigDecimal validateSetPrice() {
         while (true) {
             String price_string = managerInputOutput.readLineIO("Введите price : ").trim().replace(',', '.');
-            if (price_string.isEmpty()) continue;
+            if (price_string.isEmpty()) {
+                managerInputOutput.writeLineIO("Price не может быть пустым\n");
+                continue;
+            }
             try {
                 BigDecimal price = new BigDecimal(price_string);
                 if (price.compareTo(BigDecimal.ZERO) >= 0) return price;
-                managerInputOutput.writeLineIO("Price не может быть отрицательным");
+                managerInputOutput.writeLineIO("Price не может быть отрицательным\n");
             } catch (NumberFormatException e) {
                 managerInputOutput.writeLineIO("Ошибка при вводе формата price\n", Colors.RED);
             }
