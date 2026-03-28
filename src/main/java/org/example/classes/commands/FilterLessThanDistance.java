@@ -21,7 +21,7 @@ public class FilterLessThanDistance implements Command {
                 return;
             }
 
-            BigDecimal valute = managerApi.getPriceDollarForRublesRedis();
+            BigDecimal valute = managerApi.getCourse();
             if (valute == null) {
                 managerInputOutput.writeLineIO("У вас проблемы с интернетом\n", Colors.YELLOW);
                 return;

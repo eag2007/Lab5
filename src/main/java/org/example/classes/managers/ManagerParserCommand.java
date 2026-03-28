@@ -35,9 +35,7 @@ public class ManagerParserCommand {
         this.commands.put("update", new Update());
         this.commands.put("ls", new Show());
         this.commands.put("count", new Count());
-        this.commands.put("test1", new TestWithRedis());
-        this.commands.put("test2", new TestWithNotRedis());
-
+        this.commands.put("test", new TestRedis());
     }
 
     public boolean parserCommand(String s) {

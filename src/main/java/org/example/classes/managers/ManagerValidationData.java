@@ -9,7 +9,6 @@ import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeParseException;
 
-import static org.example.classes.runner.Runner.managerApi;
 import static org.example.classes.runner.Runner.managerInputOutput;
 
 public class ManagerValidationData {

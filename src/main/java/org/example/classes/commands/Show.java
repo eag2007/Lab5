@@ -12,7 +12,8 @@ public class Show implements Command {
 
     public void executeCommand(String[] args) {
         if (checkArg(args)) {
-            BigDecimal valute = managerApi.getPriceDollarForRublesRedis();
+
+            BigDecimal valute = managerApi.getCourse();
             if (valute == null) {
                 managerInputOutput.writeLineIO("У вас проблемы с интернетом\n", Colors.YELLOW);
                 return;
