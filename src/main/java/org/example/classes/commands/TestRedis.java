@@ -22,12 +22,10 @@ public class TestRedis implements Command {
 
         managerInputOutput.writeLineIO("\n=== ТЕСТИРОВАНИЕ КЭША REDIS ===\n");
 
-        // Устанавливаем частоту обновления
         managerApi.setTtl(ttl);
 
         managerInputOutput.writeLineIO("Элементов в коллекции: " + managerCollections.getCollectionsRoute().size() + "\n");
 
-        // Очищаем кэш перед тестом
         managerApi.clearCache();
 
         managerInputOutput.writeLineIO("\n--- ПОЛУЧЕНИЕ КУРСА (первый раз, должен пойти в API) ---\n");
@@ -42,7 +40,6 @@ public class TestRedis implements Command {
         BigDecimal course2 = managerApi.getCourse();
         managerInputOutput.writeLineIO("Курс: " + course2 + " RUB\n");
 
-        // Таблица погрешности
         managerInputOutput.writeLineIO("\n--- ТЕОРЕТИЧЕСКАЯ ПОГРЕШНОСТЬ ---\n");
         managerInputOutput.writeLineIO("-------------------------------------\n");
         managerInputOutput.writeLineIO("│ Время │ Погрешность  │ Статус     │\n");
@@ -73,7 +70,6 @@ public class TestRedis implements Command {
             managerInputOutput.writeLineIO("Рекомендация: TTL оптимальный\n");
         }
 
-        // ПОДСЧЕТ СТОИМОСТИ С ЗАПРОСАМИ В REDIS
         managerInputOutput.writeLineIO("\n=== ПОДСЧЕТ ОБЩЕЙ СТОИМОСТИ ===\n");
         managerInputOutput.writeLineIO("Каждый запрос курса идет в Redis\n");
 
